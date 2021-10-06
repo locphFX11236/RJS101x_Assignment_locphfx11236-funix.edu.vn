@@ -19,7 +19,7 @@ class StaffList extends Component {
     renderSelectList (staff) {
         if (staff != null) {
             return (
-                <div>
+                <div className="border col-12 col-md-6 m-1">
                     <h4>Họ và tên: {staff.name}</h4>
                     <p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
                     <p>Ngày vào công ty: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
@@ -40,18 +40,18 @@ class StaffList extends Component {
 
         const List = this.state.staffs.map((staff) => {
             return (
-               <div key={staff.id}>
+               <div key={staff.id} className="border col-12 col-md-5 col-lg-3 m-1 text-center" onClick={() => this.onListSelect(staff)}>
                    {staff.name}
                </div> 
             )
         });
 
         return (
-            <div>
-                <div>
+            <div className="container">
+                <div className="row justify-content-center">
                     {List}
                 </div>
-                <div>
+                <div className="row justify-content-center">
                     {this.renderSelectList(this.state.selectedList)}
                 </div>
             </div>
