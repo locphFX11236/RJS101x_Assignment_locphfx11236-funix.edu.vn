@@ -21,6 +21,8 @@ class StaffList extends Component {
             return (
                 <div>
                     <h4>Họ và tên: {staff.name}</h4>
+                    <p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
+                    <p>Ngày vào công ty: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
                     <p>Phòng ban: {staff.department.name}</p>
                     <p>Chức danh: {staff.department.id}</p>
                     <p>Số ngày nghỉ còn lại: {staff.annualLeave}</p>
