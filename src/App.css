@@ -1,0 +1,23 @@
+.container {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+.border {
+    border-radius: 20px;
+    background-color: greenyellow;
+}
+.card-footer{
+    background-color: #007bff;
+    height: 20vh;
+}
+.card-header {
+    height: 10vh;
+}
+.card-body {
+    padding: 30px
+}
+nav {
+    display: block;
+    background-color: gainsboro;
+}
