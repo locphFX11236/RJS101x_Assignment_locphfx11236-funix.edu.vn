@@ -8,14 +8,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App card">
         <Navbar dark color="primary">
-          <div className="container">
+          <div className="container card-header">
             <NavbarBrand href="/">Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
           </div>
         </Navbar>
         <nav>Danh Sách</nav>
-        <StaffList />
+        <main className="card-body"><StaffList /></main>
+        <div className="align-self-end">
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+        </div>
+        <footer className="card-footer align-items-end"></footer>
       </div>
     );
   }
