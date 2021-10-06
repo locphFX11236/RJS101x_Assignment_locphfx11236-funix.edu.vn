@@ -18,7 +18,15 @@ class StaffList extends Component {
 
     renderSelectList (staff) {
         if (staff != null) {
-            
+            return (
+                <div>
+                    <h4>Họ và tên: {staff.name}</h4>
+                    <p>Phòng ban: {staff.department.name}</p>
+                    <p>Chức danh: {staff.department.id}</p>
+                    <p>Số ngày nghỉ còn lại: {staff.annualLeave}</p>
+                    <p>Số ngày đã làm thêm: {staff.overTime}</p>
+                </div>
+            )
         } else {
             return(
                 <div><p>Bấm vào tên nhân viên để xem thông tin</p></div>
