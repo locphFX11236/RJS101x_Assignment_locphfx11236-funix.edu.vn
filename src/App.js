@@ -16,11 +16,6 @@ class App extends Component {
         </Navbar>
         <nav>Danh Sách</nav>
         <main className="card-body"><StaffList /></main>
-        <div className="align-self-end">
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-        </div>
         <footer className="card-footer align-items-end"></footer>
       </div>
     );
