@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { STAFFS } from '../shared/staffs.jsx';
 import dateFormat from 'dateformat';
-import Respon from './ResponsiveComponents';
-import ReactDOM from 'react-dom';
 
 class StaffList extends Component {
     
@@ -10,12 +8,13 @@ class StaffList extends Component {
         super(props);
         this.state = {
             staffs : STAFFS,
-            selectedList : null
+            selectedList : null,
+            clas : "border col-12 col-md-5 text-center col-lg-3 m-1",
         };
     }
-    
-    onListSelect(staff) {
-        this.setState({ selectedList: staff});
+
+    renderClass (clas) {
+        return(clas)
     }
 
     renderSelectList (staff) {
@@ -38,26 +37,48 @@ class StaffList extends Component {
         }
     }
 
+    Two() {
+        this.setState({clas: "border col-12 col-md-5 text-center col-lg-5 m-1"})
+    }
+
+    Three() {
+        this.setState({clas: "border col-12 col-md-5 text-center col-lg-3 m-1"})
+    }
+
+    Six() {
+        this.setState({clas: "border col-12 col-md-5 text-center col-lg-2"})
+    }
+    
+    onListSelect(staff) {
+        this.setState({selectedList: staff});
+    }
+
     render() {
 
         const List = this.state.staffs.map((staff) => {
-            return (
-               <div key={staff.id} id="MList" className="border col-12 col-md-5 col-lg-3 m-1 text-center" onClick={() => this.onListSelect(staff)}>
+            return (    
+               <div key={staff.id} className={ this.renderClass(this.state.clas) } onClick={() => this.onListSelect(staff)}>
                    {staff.name}
                </div> 
             )
         });
 
         return (
-            <div className="container">
-                <div className="row justify-content-center">
-                    {List}
+            <div>
+                <div className="mb-4 row justify-content-end" with="100%">
+                    <button onClick={() => this.Two()}>2</button>
+                    <button onClick={() => this.Three()}>3</button>
+                    <button onClick={() => this.Six()}>6</button>
                 </div>
-                <br /><hr />
-                <div className="row justify-content-center">
-                    {this.renderSelectList(this.state.selectedList)}
+                <div className="container">
+                    <div className="row justify-content-center">
+                        {List}
+                    </div>
+                    <br /><hr />
+                    <div className="row justify-content-center">
+                        {this.renderSelectList(this.state.selectedList)}
+                    </div>
                 </div>
-                <Respon id="MList" />
             </div>
         );
     }
