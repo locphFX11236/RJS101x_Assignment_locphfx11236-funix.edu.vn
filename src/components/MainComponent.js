@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import StaffList from './StaffListComponent';
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
 import { STAFFS } from '../shared/staffs.jsx';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -18,11 +20,13 @@ class Main extends Component {
     render() {
         return (
             <div>
-                {/* <Switch> */}
+                <Header />
+                <Switch>
                     <Route exact path='/staff' component={() => <StaffList staffs={this.state.staffs} />} />
                     {/* <Route path='/staff/:dishId' component={} /> */}
                     <Redirect to="/staff" />
-                {/* </Switch> */}
+                </Switch>
+                <Footer />
             </div>
         )
     }

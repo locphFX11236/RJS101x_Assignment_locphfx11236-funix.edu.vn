@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
-// import { STAFFS } from '../shared/staffs.jsx';
+import { Card, CardImg, CardText, CardBody,
+    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 // import dateFormat from 'dateformat';
 
 function RenderStaffItem (props) {
 
     const List = props.staffs.map((staff) => {
         return ( 
-           <div key={staff.id} className="border col-12 col-md-5 text-center col-lg-3 m-1" /*className={ this.renderClass(this.state.clas) } onClick={() => this.onListSelect(staff)}*/ >
-               {staff.name}
-           </div>
+           <Card key={staff.id} className="border col-6 col-md-4 text-center col-lg-2" /*className={ this.renderClass(this.state.clas) } onClick={() => this.onListSelect(staff)}*/ >
+               <CardImg src={staff.image} alt={staff.name} />
+               <CardTitle>{staff.name}</CardTitle>
+           </Card>
         )
     });
 
@@ -34,17 +35,11 @@ function RenderStaffItem (props) {
 }
 
 function StaffList(props) {
-    console.log(props.staffs)
+
     return (
         <div className="card">
-            <Navbar dark color="primary">
-                <div className="container card-header">
-                    <NavbarBrand href="/">Ứng dụng quản lý nhân sự v1.0</NavbarBrand>
-                </div>
-            </Navbar>
             <nav>Danh Sách</nav>
             <main className="card-body"><RenderStaffItem staffs={props.staffs} /></main>
-            <footer className="card-footer align-items-end"></footer>
         </div>
     );
 }
