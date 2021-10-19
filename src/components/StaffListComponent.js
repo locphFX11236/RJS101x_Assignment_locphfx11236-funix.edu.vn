@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardTitle } from 'reactstrap';
 // import dateFormat from 'dateformat';
 
 function RenderStaffItem (props) {
