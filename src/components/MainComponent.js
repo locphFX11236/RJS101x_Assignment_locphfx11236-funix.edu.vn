@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StaffList from './StaffListComponent';
 import Department from './DepartmentComponent';
+import Salary from './SalaryComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { STAFFS } from '../shared/staffs.jsx';
@@ -26,7 +27,7 @@ class Main extends Component {
                     <Route exact path='/staff' component={() => <StaffList staffs={this.state.staffs} />} />
                     {/* <Route path='/staff/:dishId' component={} /> */}
                     <Route exact path='/department' component={() => <Department departs={this.state.staffs.map((staff) => staff.department)} />} />
-                    {/* <Route exact path='/salary' component={Salary} /> */}
+                    <Route exact path='/salary' component={() => <Salary staffs={this.state.staffs} />} />
                     <Redirect to="/staff" />
                 </Switch>
                 <Footer />
