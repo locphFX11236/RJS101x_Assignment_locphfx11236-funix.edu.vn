@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from 'reactstrap';
 
 const Salary = (props) => {
     const List = props.staffs.map((staff) => {
