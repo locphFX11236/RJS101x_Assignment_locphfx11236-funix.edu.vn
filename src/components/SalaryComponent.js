@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Salary = (props) => {
     const List = props.staffs.map((staff) => {
         return ( 
-            <div className="border col-12 col-md-6 col-lg-4">
+            <div className="border col-12 col-md-5 col-lg-3 m-1">
                 <h3>{staff.name}</h3>
                 <p>Mã nhân viên: {staff.id}</p>
                 <p>Hệ số lương: {staff.salaryScale}</p>

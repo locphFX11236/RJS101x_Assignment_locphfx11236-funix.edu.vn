@@ -7,7 +7,7 @@ function RenderStaffItem (props) {
 
     const List = props.staffs.map((staff) => {
         return ( 
-           <Card key={staff.id} className="border col-6 col-md-4 text-center col-lg-2" >
+           <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
                 <Link to={`/staff/${staff.id}`} >
                     <CardImg src={staff.image} alt={staff.name} />
                     <CardTitle>{staff.name}</CardTitle>
@@ -36,7 +36,7 @@ function StaffList(props) {
                     <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            <main className="card-body"><RenderStaffItem staffs={props.staffs} /></main>
+            <RenderStaffItem staffs={props.staffs} />
         </div>
     );
 }

@@ -20,27 +20,27 @@ class Header extends Component {
 
     render() {
         return(
-        <React.Fragment>
-            <Navbar dark expand="md">
-                <div className="container">
-                <NavbarToggler onClick={this.toggleNav} />
-                <NavbarBrand className="mr-auto" href="/"><img src='../assets/images/logo.png' height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
-                <Collapse isOpen={this.state.isNavOpen} navbar>
-                    <Nav navbar>
-                    <NavItem>
-                        <NavLink className="nav-link"  to='/stafflist'><i class="fa fa-users" aria-hidden="true"></i> Nhân Viên</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink className="nav-link" to='/department'><i class="fa fa-id-card-o" aria-hidden="true"></i> Phòng Ban</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink className="nav-link"  to='/salary'><i class="fa fa-money" aria-hidden="true"></i> Bảng Lương</NavLink>
-                    </NavItem>
-                    </Nav>
-                </Collapse>
-                </div>
-            </Navbar>
-        </React.Fragment>
+          <React.Fragment>
+              <Navbar dark expand="md">
+                  <div className="container">
+                  <NavbarToggler onClick={this.toggleNav} />
+                  <NavbarBrand className="mr-auto" href="/"><img src='../assets/images/logo.png' height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
+                  <Collapse isOpen={this.state.isNavOpen} navbar>
+                      <Nav navbar>
+                      <NavItem>
+                          <NavLink className="nav-link"  to='/stafflist'><i class="fa fa-users" aria-hidden="true"></i> Nhân Viên</NavLink>
+                      </NavItem>
+                      <NavItem>
+                          <NavLink className="nav-link" to='/department'><i class="fa fa-id-card-o" aria-hidden="true"></i> Phòng Ban</NavLink>
+                      </NavItem>
+                      <NavItem>
+                          <NavLink className="nav-link"  to='/salary'><i class="fa fa-money" aria-hidden="true"></i> Bảng Lương</NavLink>
+                      </NavItem>
+                      </Nav>
+                  </Collapse>
+                  </div>
+              </Navbar>
+          </React.Fragment>
         )
     }
 }
