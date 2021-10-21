@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardImg, CardTitle } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function RenderStaffItem (props) {
@@ -29,8 +30,12 @@ function RenderStaffItem (props) {
 function StaffList(props) {
 
     return (
-        <div className="card">
-            <nav>Danh Sách</nav>
+        <div className="container">
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
+                </Breadcrumb>
+            </div>
             <main className="card-body"><RenderStaffItem staffs={props.staffs} /></main>
         </div>
     );

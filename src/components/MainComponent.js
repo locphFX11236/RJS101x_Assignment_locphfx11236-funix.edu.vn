@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StaffList from './StaffListComponent';
 import Department from './DepartmentComponent';
 import Salary from './SalaryComponent';
-import StaffDetail from './StaffdetailComponent';
+import StaffDetail from './StaffDetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { STAFFS } from '../shared/staffs.jsx';
@@ -23,8 +23,8 @@ class Main extends Component {
         const StaffWithId = ({match}) => {
             return(
                 <StaffDetail staff=
-                    {this.state.staffs.filter(
-                    (staff) => staff.id === parseInt(match.params.staffId,10)
+                 {this.state.staffs.filter(
+                 (staff) => staff.id === parseInt(match.params.staffId,10)
                 )[0]} />
             )
         };

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const Salary = (props) => {
     const List = props.staffs.map((staff) => {
@@ -16,7 +18,10 @@ const Salary = (props) => {
     return (
         <div className="container">
             <div className="row">
-                Breadcrumb
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Salary</BreadcrumbItem>
+                </Breadcrumb>
             </div>
             <div className="row">
                 {List}

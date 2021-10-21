@@ -1,10 +1,15 @@
 import React from 'react';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const Department = (props) => {
     return (
         <div className="container">
             <div className="row">
-                Breadcrumb
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Department</BreadcrumbItem>
+                </Breadcrumb>
             </div>
             <div className="row">
                 <div className="border col-12 col-md-6 col-lg-4">
