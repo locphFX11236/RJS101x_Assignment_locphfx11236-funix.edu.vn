@@ -7,20 +7,13 @@ row {
     margin-right: auto;
 }
 .border {
-    border-radius: 20px;
-    padding: 1em;
+    border-radius: 10px;
+    background-color: gainsboro;
+    border-color: rgb(97, 55, 136) !important
 }
 .footer{
-    padding: 30px;
+    padding: 20px;
     background-color: #007bff;
-}
-.card-header {
-    height: 10vh;
-}
-.main {
-    margin: 30px;
-    min-height: 70vh;
-    background-color: gainsboro;
 }
 nav {
     display: block;

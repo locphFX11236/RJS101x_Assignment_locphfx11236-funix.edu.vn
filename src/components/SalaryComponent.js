@@ -23,7 +23,7 @@ const Salary = (props) => {
                     <BreadcrumbItem active>Salary</BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            <div className="row">
+            <div className="row justify-content-center card-body">
                 {List}
             </div>
         </div>

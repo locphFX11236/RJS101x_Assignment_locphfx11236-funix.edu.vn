@@ -5,7 +5,7 @@ import dateFormat from 'dateformat';
 
 function Render({ staff }) {
     return (
-        <div className="row">
+        <div className="row justify-content-center card-body">
             <img className="col-12 col-md-4 col-lg-3" src={staff.image} alt={staff.name} />
             <div className="col-12 col-md-8 col-lg-9 text-left">
                 <h4>Họ và tên: {staff.name}</h4>

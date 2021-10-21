@@ -19,7 +19,7 @@ function RenderStaffItem (props) {
     return (
         <div>
             <div className="container">
-                <div className="row justify-content-center">
+                <div className="row justify-content-center card-body">
                     {List}
                 </div>
             </div>

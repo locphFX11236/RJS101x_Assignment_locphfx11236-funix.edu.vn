@@ -11,7 +11,7 @@ const Department = (props) => {
                     <BreadcrumbItem active>Department</BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            <div className="row">
+            <div className="row justify-content-center card-body">
                 <div className="border col-12 col-md-5 col-lg-3 m-1">
                     <h3>Sale</h3>
                     <p>Số lượng nhân viên: {props.departs.filter(depart => depart.name === "Sale").length}</p>
