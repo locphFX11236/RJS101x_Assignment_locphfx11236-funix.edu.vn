@@ -6,7 +6,6 @@ import StaffDetail from './StaffdetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { STAFFS } from '../shared/staffs.jsx';
-import { DEPARTMENTS } from '../shared/staffs';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 class Main extends Component {
@@ -15,8 +14,7 @@ class Main extends Component {
         super(props);
   
         this.state = {
-            staffs: STAFFS,
-            department: DEPARTMENTS,
+            staffs: STAFFS
         }
     }
 
@@ -24,8 +22,10 @@ class Main extends Component {
 
         const StaffWithId = ({match}) => {
             return(
-                <StaffDetail staff={this.state.staffs.filter((staff) => staff.id === parseInt(match.params.staffId,10))}
-                 department={this.state.department} />
+                <StaffDetail staff=
+                    {this.state.staffs.filter(
+                    (staff) => staff.id === parseInt(match.params.staffId,10)
+                )[0]} />
             )
         };
 
