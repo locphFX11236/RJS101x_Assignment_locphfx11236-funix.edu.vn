@@ -1,6 +1,4 @@
-row {
-    margin: 0px;
-}
+row {margin: 0px;}
 .container {
     padding: 0;
     margin-left: auto;
@@ -19,3 +17,5 @@ nav {
     display: block;
     background-color: #007bff;
 }
+.card-body {padding: 40px;}
+.breadcrumb {margin: 0;}
