@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText } from 'reactstrap';
 import { Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody,
-    Button, Row, Col, Label } from 'reactstrap';
+    Button, Row, Col, Label, Input } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
@@ -63,10 +63,15 @@ class StaffList extends Component  {
     render() {
         return (
             <div className="container">
-                <Row>
+                <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>
                     </Breadcrumb>
+                    <Button outline onClick={this.toggleModal}>Thêm nhân viên</Button>
+                    <Row className="col-12 col-md-5 justify-content-end" >
+                        <Input className="col-10" type="search" placeholder="Search"/>
+                        <Button className="col-2" type="button"><i class="fa fa-search"></i></Button>
+                    </Row>
                 </Row>
                 <RenderStaffItem staffs={this.props.staffs} />
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
