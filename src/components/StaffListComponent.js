@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText } from 'reactstrap';
-import { Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody,
-    Button, Row, Col, Label, Input } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem,
+    Modal, ModalHeader, ModalBody,
+    Button, Row, Col, Label, Input
+} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
-function RenderStaffItem (props) {
-
-    const List = props.staffs.map((staff) => {
+function RenderStaffItem ({ staffs, searchs }) {
+    let Items = staffs
+    if (searchs.length !== 0) {
+        Items = searchs
+    }
+    const List = Items.map((staff) => {
         return ( 
            <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
                 <Link to={`/staff/${staff.id}`} >
@@ -40,12 +45,13 @@ class StaffList extends Component  {
         super(props);
     
         this.state = {
-          isModalOpen: false
+            isModalOpen: false,
+            searchs: []
         };
 
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     toggleModal() {
@@ -55,9 +61,17 @@ class StaffList extends Component  {
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
         this.toggleModal()
+    }
+
+    handleSearch() {
+        alert('You Search: ' + this.search.value);
+        this.setState({
+            searchs: this.props.staffs.filter(
+                (staff) => staff.name.toLowerCase().includes(this.search.value)
+            )
+        })
     }
 
     render() {
@@ -69,11 +83,15 @@ class StaffList extends Component  {
                     </Breadcrumb>
                     <Button outline onClick={this.toggleModal}>Thêm nhân viên</Button>
                     <Row className="col-12 col-md-5 justify-content-end" >
-                        <Input className="col-10" type="search" placeholder="Search"/>
-                        <Button className="col-2" type="button"><i class="fa fa-search"></i></Button>
+                        <Input className="col-10" type="search" placeholder="Search"
+                         innerRef={(input) => this.search = input}/>
+                        <Button className="col-2" type="button"
+                         onClick={this.handleSearch}>
+                            <i class="fa fa-search"></i>
+                        </Button>
                     </Row>
                 </Row>
-                <RenderStaffItem staffs={this.props.staffs} />
+                <RenderStaffItem staffs={this.props.staffs} searchs={this.state.searchs}/>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>
@@ -93,9 +111,9 @@ class StaffList extends Component  {
                                         model=".name"
                                         show="touched"
                                         messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 characters',
-                                            maxLength: 'Must be 15 characters or less'
+                                            required: 'Không bỏ trống ',
+                                            minLength: 'Phải dài hơn 2 kí tự',
+                                            maxLength: 'Phải ít hơn 16 kí tự'
                                         }}
                                      />
                                 </Col>
@@ -104,21 +122,16 @@ class StaffList extends Component  {
                                 <Label htmlFor="doB" md={5}>Ngày sinh</Label>
                                 <Col md={7}>
                                     <Control.text model=".doB" name="doB"
+                                        type="date"
                                         placeholder="Ngày sinh"
                                         className="form-control"
-                                        validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15)
-                                        }}
+                                        validators={{ required }}
                                      />
                                     <Errors
                                         className="text-danger"
                                         model=".doB"
                                         show="touched"
-                                        messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 characters',
-                                            maxLength: 'Must be 15 characters or less'
-                                        }}
+                                        messages={{ required: 'Không bỏ trống ' }}
                                      />
                                 </Col>
                             </Row>
@@ -129,7 +142,7 @@ class StaffList extends Component  {
                                         placeholder="Hệ số lương"
                                         className="form-control"
                                         validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            required, isNumber
                                         }}
                                      />
                                     <Errors
@@ -137,10 +150,8 @@ class StaffList extends Component  {
                                         model=".salaryScale"
                                         show="touched"
                                         messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 numbers',
-                                            maxLength: 'Must be 15 numbers or less',
-                                            isNumber: 'Must be a number'
+                                            required: 'Không bỏ trống ',
+                                            isNumber: 'Phải là một số'
                                         }}
                                      />
                                 </Col>
@@ -149,10 +160,11 @@ class StaffList extends Component  {
                                 <Label htmlFor="startDate" md={5}>Ngày vào công ty</Label>
                                 <Col md={7}>
                                     <Control.text model=".startDate" name="startDate"
+                                        type="date"
                                         placeholder="Ngày vào công ty"
                                         className="form-control"
                                         validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            required
                                         }}
                                      />
                                     <Errors
@@ -160,10 +172,7 @@ class StaffList extends Component  {
                                         model=".startDate"
                                         show="touched"
                                         messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 numbers',
-                                            maxLength: 'Must be 15 numbers or less',
-                                            isNumber: 'Must be a number'
+                                            required: 'Không bỏ trống '
                                         }}
                                      />
                                 </Col>
@@ -175,18 +184,15 @@ class StaffList extends Component  {
                                         placeholder="Phòng ban"
                                         className="form-control"
                                         validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            required
                                         }}
-                                     />
+                                    />
                                     <Errors
                                         className="text-danger"
                                         model=".department"
                                         show="touched"
                                         messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 numbers',
-                                            maxLength: 'Must be 15 numbers or less',
-                                            isNumber: 'Must be a number'
+                                            required: 'Không bỏ trống '
                                         }}
                                      />
                                 </Col>
@@ -198,7 +204,7 @@ class StaffList extends Component  {
                                         placeholder="Số ngày nghỉ còn lại"
                                         className="form-control"
                                         validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            required, isNumber
                                         }}
                                      />
                                     <Errors
@@ -206,10 +212,8 @@ class StaffList extends Component  {
                                         model=".annualLeave"
                                         show="touched"
                                         messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 numbers',
-                                            maxLength: 'Must be 15 numbers or less',
-                                            isNumber: 'Must be a number'
+                                            required: 'Không bỏ trống ',
+                                            isNumber: 'Phải là một số'
                                         }}
                                      />
                                 </Col>
@@ -221,7 +225,7 @@ class StaffList extends Component  {
                                         placeholder="Số ngày đã làm thêm"
                                         className="form-control"
                                         validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+                                            required, isNumber
                                         }}
                                      />
                                     <Errors
@@ -229,10 +233,8 @@ class StaffList extends Component  {
                                         model=".overTime"
                                         show="touched"
                                         messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 numbers',
-                                            maxLength: 'Must be 15 numbers or less',
-                                            isNumber: 'Must be a number'
+                                            required: 'Không bỏ trống ',
+                                            isNumber: 'Phải là một số'
                                         }}
                                      />
                                 </Col>
