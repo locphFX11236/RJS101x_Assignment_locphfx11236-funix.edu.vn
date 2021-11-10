@@ -12,20 +12,22 @@ const mapStateToProps = state => {
     return {
       staffs: state.staffs
     }
-  }
+}
 
 class Main extends Component {
     render() {
 
         const StaffWithId = ({match}) => {
             return(
-                <StaffDetail staff=
-                 {this.props.staffs.filter(
-                 (staff) => staff.id === parseInt(match.params.staffId,10)
-                )[0]} />
+                <StaffDetail 
+                 staff={this.props.staffs.filter(
+                    (staff) => staff.id === parseInt(match.params.staffId,10)
+                 )[0]}
+                //  addStaff={this.props.addStaff}
+                />
             )
         };
-
+        // console.log(this.props.addStaff)
         return (
             <div>
                 <Header />

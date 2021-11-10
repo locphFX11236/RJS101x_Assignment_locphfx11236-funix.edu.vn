@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 
 function RenderStaffItem ({ staffs, searchs }) {
     let Items = staffs
-    if (searchs.length !== 0) {
-        Items = searchs
-    }
+    if (searchs.length !== 0) { Items = searchs }
     const List = Items.map((staff) => {
         return ( 
            <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
@@ -24,11 +22,9 @@ function RenderStaffItem ({ staffs, searchs }) {
     });
 
     return (
-        <div>
-            <div className="container">
-                <div className="row justify-content-center card-body">
-                    {List}
-                </div>
+        <div className="container">
+            <div className="row justify-content-center card-body">
+                {List}
             </div>
         </div>
     )
@@ -46,7 +42,8 @@ class StaffList extends Component  {
     
         this.state = {
             isModalOpen: false,
-            searchs: []
+            searchs: [],
+            staffs: this.props.staffs
         };
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -61,12 +58,24 @@ class StaffList extends Component  {
     }
 
     handleSubmit(values) {
-        alert('Current State is: ' + JSON.stringify(values));
-        this.toggleModal()
+        const newStaff = {
+            id: this.props.staffs.length,
+            name: values.name,
+            doB: values.doB,
+            salaryScale: values.salaryScale,
+            startDate: values.startDate,
+            department: values.department,
+            annualLeave: values.annualLeave,
+            overTime: values.overTime,
+            image: '/assets/images/alberto.png',
+        };
+        this.setState({
+            staffs: this.state.staffs.concat([newStaff])
+        });
+        this.toggleModal();
     }
 
     handleSearch() {
-        alert('You Search: ' + this.search.value);
         this.setState({
             searchs: this.props.staffs.filter(
                 (staff) => staff.name.toLowerCase().includes(this.search.value)
@@ -77,6 +86,7 @@ class StaffList extends Component  {
     render() {
         return (
             <div className="container">
+                { console.log(this.state.staffs) }
                 <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>
@@ -91,7 +101,7 @@ class StaffList extends Component  {
                         </Button>
                     </Row>
                 </Row>
-                <RenderStaffItem staffs={this.props.staffs} searchs={this.state.searchs}/>
+                <RenderStaffItem staffs={this.state.staffs} searchs={this.state.searchs}/>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>
