@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText } from 'reactstrap';
-import { Breadcrumb, BreadcrumbItem,
+import { Breadcrumb, BreadcrumbItem, Form,
     Modal, ModalHeader, ModalBody,
     Button, Row, Col, Label, Input
 } from 'reactstrap';
@@ -92,14 +92,13 @@ class StaffList extends Component  {
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>
                     </Breadcrumb>
                     <Button outline onClick={this.toggleModal}>Thêm nhân viên</Button>
-                    <Row className="col-12 col-md-5 justify-content-end" >
+                    <Form onSubmit={this.handleSearch} className="row col-12 col-md-5 justify-content-end" >
                         <Input className="col-10" type="search" placeholder="Search"
                          innerRef={(input) => this.search = input}/>
-                        <Button className="col-2" type="button"
-                         onClick={this.handleSearch}>
+                        <Button className="col-2" type="submit">
                             <i class="fa fa-search"></i>
                         </Button>
-                    </Row>
+                    </Form>
                 </Row>
                 <RenderStaffItem staffs={this.state.staffs} searchs={this.state.searchs}/>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
