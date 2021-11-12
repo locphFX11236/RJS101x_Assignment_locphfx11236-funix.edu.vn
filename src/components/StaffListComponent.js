@@ -4,7 +4,6 @@ import { Breadcrumb, BreadcrumbItem, Form,
     Modal, ModalHeader, ModalBody,
     Button, Row, Col, Label, Input
 } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
 function RenderStaffItem ({ staffs, searchs }) {
@@ -30,11 +29,6 @@ function RenderStaffItem ({ staffs, searchs }) {
     )
 }
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
-const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
-
 class StaffList extends Component  {
 
     constructor(props) {
@@ -43,12 +37,23 @@ class StaffList extends Component  {
         this.state = {
             isModalOpen: false,
             searchs: [],
-            staffs: this.props.staffs
+            staffs: this.props.staffs,
+            newStaff: {
+                id: '',
+                name: '',
+                doB: '',
+                salaryScale: 0,
+                startDate: '',
+                department: '',
+                annualLeave: 0,
+                overTime: 0,
+            }
         };
 
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     toggleModal() {
@@ -57,36 +62,51 @@ class StaffList extends Component  {
         })
     }
 
-    handleSubmit(values) {
-        const newStaff = {
-            id: this.props.staffs.length,
-            name: values.name,
-            doB: values.doB,
-            salaryScale: values.salaryScale,
-            startDate: values.startDate,
-            department: values.department,
-            annualLeave: values.annualLeave,
-            overTime: values.overTime,
-            image: '/assets/images/alberto.png',
-        };
+    handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        const NewStaff = this.state.newStaff;
         this.setState({
-            staffs: this.state.staffs.concat([newStaff])
+            newStaff: {
+                id: this.state.staffs.length,
+                name: NewStaff.name,
+                doB: NewStaff.doB,
+                salaryScale: NewStaff.salaryScale,
+                startDate: NewStaff.startDate,
+                department: NewStaff.department,
+                annualLeave: NewStaff.annualLeave,
+                overTime: NewStaff.overTime,
+                image: '/assets/images/alberto.png',
+                
+                [name]: value
+            }
         });
-        this.toggleModal();
     }
 
-    handleSearch() {
+    handleSubmit(e) {
+        this.setState({
+            staffs: this.state.staffs.concat([this.state.newStaff])
+        });
+        alert('Current State is: ' + JSON.stringify(this.state.newStaff));
+        this.toggleModal();
+        e.preventDefault();
+    }
+
+    handleSearch(e) {
         this.setState({
             searchs: this.props.staffs.filter(
                 (staff) => staff.name.toLowerCase().includes(this.search.value)
             )
         })
+        e.preventDefault();
     }
 
     render() {
         return (
             <div className="container">
                 { console.log(this.state.staffs) }
+                { console.log(this.state.newStaff) }
                 <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>
@@ -104,148 +124,91 @@ class StaffList extends Component  {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>
-                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                    <Form onSubmit={this.handleSubmit}>
                             <Row className="form-group m-2">
                                 <Label htmlFor="name" md={5}>Nhập tên</Label>
                                 <Col md={7}>
-                                    <Control.text model=".name" name="name"
+                                    <Input type="text" name="name"
                                         placeholder="Nhập tên"
                                         className="form-control"
-                                        validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15)
-                                        }}
-                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".name"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Không bỏ trống ',
-                                            minLength: 'Phải dài hơn 2 kí tự',
-                                            maxLength: 'Phải ít hơn 16 kí tự'
-                                        }}
-                                     />
+                                        value={this.state.newStaff.name}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    { console.log(this.state.newStaff.name) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
                                 <Label htmlFor="doB" md={5}>Ngày sinh</Label>
                                 <Col md={7}>
-                                    <Control.text model=".doB" name="doB"
+                                    <Input name="doB"
                                         type="date"
                                         placeholder="Ngày sinh"
                                         className="form-control"
-                                        validators={{ required }}
-                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".doB"
-                                        show="touched"
-                                        messages={{ required: 'Không bỏ trống ' }}
-                                     />
+                                        value={this.state.newStaff.doB}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    { console.log(this.state.newStaff.doB) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
                                 <Label htmlFor="salaryScale" md={5}>Hệ số lương</Label>
                                 <Col md={7}>
-                                    <Control.text model=".salaryScale" name="salaryScale"
+                                    <Input type="number" name="salaryScale"
                                         placeholder="Hệ số lương"
                                         className="form-control"
-                                        validators={{
-                                            required, isNumber
-                                        }}
-                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".salaryScale"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Không bỏ trống ',
-                                            isNumber: 'Phải là một số'
-                                        }}
-                                     />
+                                        value={this.state.newStaff.salaryScale}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    { console.log(this.state.newStaff.salaryScale) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
                                 <Label htmlFor="startDate" md={5}>Ngày vào công ty</Label>
                                 <Col md={7}>
-                                    <Control.text model=".startDate" name="startDate"
+                                    <Input name="startDate"
                                         type="date"
                                         placeholder="Ngày vào công ty"
                                         className="form-control"
-                                        validators={{
-                                            required
-                                        }}
-                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".startDate"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Không bỏ trống '
-                                        }}
-                                     />
+                                        value={this.state.newStaff.startDate}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    { console.log(this.state.newStaff.startDate) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
                                 <Label htmlFor="department" md={5}>Phòng ban</Label>
                                 <Col md={7}>
-                                    <Control.text model=".department" name="department"
+                                    <Input type="text" name="department"
                                         placeholder="Phòng ban"
                                         className="form-control"
-                                        validators={{
-                                            required
-                                        }}
+                                        value={this.state.newStaff.department}
+                                        onChange={this.handleInputChange}
                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".department"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Không bỏ trống '
-                                        }}
-                                     />
+                                    { console.log(this.state.newStaff.department) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
                                 <Label htmlFor="annualLeave" md={5}>Số ngày nghỉ còn lại</Label>
                                 <Col md={7}>
-                                    <Control.text model=".annualLeave" name="annualLeave"
+                                    <Input type="number" name="annualLeave"
                                         placeholder="Số ngày nghỉ còn lại"
                                         className="form-control"
-                                        validators={{
-                                            required, isNumber
-                                        }}
-                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".annualLeave"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Không bỏ trống ',
-                                            isNumber: 'Phải là một số'
-                                        }}
-                                     />
+                                        value={this.state.newStaff.annualLeave}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    { console.log(this.state.newStaff.annualLeave) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
                                 <Label htmlFor="overTime" md={5}>Số ngày đã làm thêm</Label>
                                 <Col md={7}>
-                                    <Control.text model=".overTime" name="overTime"
+                                    <Input type="number" name="overTime"
                                         placeholder="Số ngày đã làm thêm"
                                         className="form-control"
-                                        validators={{
-                                            required, isNumber
-                                        }}
-                                     />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".overTime"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Không bỏ trống ',
-                                            isNumber: 'Phải là một số'
-                                        }}
-                                     />
+                                        value={this.state.newStaff.overTime}
+                                        onChange={this.handleInputChange}
+                                    />
+                                    { console.log(this.state.newStaff.overTime) }
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -255,7 +218,7 @@ class StaffList extends Component  {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </ModalBody>
                 </Modal>
             </div>
