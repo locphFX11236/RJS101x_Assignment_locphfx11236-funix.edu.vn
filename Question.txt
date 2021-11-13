@@ -1,2 +1,4 @@
 /StaffListCo
-	Tai sao "this.state.newStaff.doB" khong thay doi duoc state?
+	"this.state.newStaff.doB" =/=> state   ?
+	e.pre   ?
+	,/;   ?

@@ -23,11 +23,10 @@ class Main extends Component {
                  staff={this.props.staffs.filter(
                     (staff) => staff.id === parseInt(match.params.staffId,10)
                  )[0]}
-                //  addStaff={this.props.addStaff}
                 />
             )
         };
-        // console.log(this.props.addStaff)
+
         return (
             <div>
                 <Header />
@@ -36,7 +35,7 @@ class Main extends Component {
                      () => <StaffList staffs={this.props.staffs} />
                     } />
 
-                    <Route path='/staff/:staffId' component={StaffWithId} />
+                    <Route path='/staff/:staffId' component={StaffWithId}/>
 
                     <Route exact path='/department' component={
                      () => <Department departs={this.props.staffs.map((staff) => staff.department)} />

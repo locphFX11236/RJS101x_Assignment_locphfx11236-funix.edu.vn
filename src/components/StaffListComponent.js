@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText } from 'reactstrap';
-import { Breadcrumb, BreadcrumbItem, Form,
+import { Breadcrumb, BreadcrumbItem, Form, FormFeedback,
     Modal, ModalHeader, ModalBody,
     Button, Row, Col, Label, Input
 } from 'reactstrap';
@@ -42,11 +42,20 @@ class StaffList extends Component  {
                 id: '',
                 name: '',
                 doB: '',
-                salaryScale: 0,
+                salaryScale: '',
                 startDate: '',
                 department: '',
-                annualLeave: 0,
-                overTime: 0,
+                annualLeave:'',
+                overTime: '',
+            },
+            touched: {
+                name: false,
+                doB: false,
+                salaryScale: false,
+                startDate: false,
+                department: false,
+                annualLeave: false,
+                overTime: false,
             }
         };
 
@@ -54,6 +63,7 @@ class StaffList extends Component  {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this)
     }
 
     toggleModal() {
@@ -62,21 +72,22 @@ class StaffList extends Component  {
         })
     }
 
-    handleInputChange(event) {
-        const target = event.target;
+    handleBlur = (field) => (e) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true }
+        });
+    }
+
+    handleInputChange = (field) => (e) => {
+        const target = e.target;
         const name = target.name;
         const value = target.value;
         const NewStaff = this.state.newStaff;
         this.setState({
             newStaff: {
+                ...NewStaff,
+                [field]: [NewStaff][field],
                 id: this.state.staffs.length,
-                name: NewStaff.name,
-                doB: NewStaff.doB,
-                salaryScale: NewStaff.salaryScale,
-                startDate: NewStaff.startDate,
-                department: NewStaff.department,
-                annualLeave: NewStaff.annualLeave,
-                overTime: NewStaff.overTime,
                 image: '/assets/images/alberto.png',
                 
                 [name]: value
@@ -84,18 +95,55 @@ class StaffList extends Component  {
         });
     }
 
+    validate(name, doB, salaryScale, startDate, department, annualLeave, overTime) {
+        const errors = {
+            name: '',
+            doB: '',
+            salaryScale: '',
+            startDate: '',
+            department: '',
+            annualLeave:'',
+            overTime: '',
+        };
+    
+        if (this.state.touched.name && name.length < 3)
+            errors.name = 'Tên phải lớn hơn 2 ký tự';
+        else if (this.state.touched.name && name.length > 15)
+            errors.name = 'Tên phải nhỏ hơn 16 ký tự';
+        
+        if (this.state.touched.doB && doB.length === 0)
+            errors.doB = 'Vui lòng nhập';
+
+        if (this.state.touched.startDate && startDate.length === 0)
+            errors.startDate = 'Vui lòng nhập';
+
+        if (this.state.touched.department && department.length === 0)
+            errors.department = 'Vui lòng nhập';
+        
+        const reg = /^\d+$/;
+        if (this.state.touched.salaryScale && !reg.test(salaryScale))
+            errors.salaryScale = 'Vui lòng nhập, chỉ bao gồm số';
+
+        if (this.state.touched.annualLeave && !reg.test(annualLeave))
+            errors.annualLeave = 'Vui lòng nhập, chỉ bao gồm số';
+
+        if (this.state.touched.overTime && !reg.test(overTime))
+            errors.overTime = 'Vui lòng nhập, chỉ bao gồm số';
+        
+        return errors;
+    }
+
     handleSubmit(e) {
         this.setState({
             staffs: this.state.staffs.concat([this.state.newStaff])
         });
-        alert('Current State is: ' + JSON.stringify(this.state.newStaff));
         this.toggleModal();
         e.preventDefault();
     }
 
     handleSearch(e) {
         this.setState({
-            searchs: this.props.staffs.filter(
+            searchs: this.state.staffs.filter(
                 (staff) => staff.name.toLowerCase().includes(this.search.value)
             )
         })
@@ -103,10 +151,11 @@ class StaffList extends Component  {
     }
 
     render() {
+        const errors = this.validate(this.state.newStaff.name, this.state.newStaff.doB, this.state.newStaff.salaryScale,
+         this.state.newStaff.startDate, this.state.newStaff.department, this.state.newStaff.annualLeave, this.state.newStaff.overTime);
+
         return (
             <div className="container">
-                { console.log(this.state.staffs) }
-                { console.log(this.state.newStaff) }
                 <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>
@@ -132,9 +181,12 @@ class StaffList extends Component  {
                                         placeholder="Nhập tên"
                                         className="form-control"
                                         value={this.state.newStaff.name}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.name === ''}
+                                        invalid={errors.name !== ''}
+                                        onBlur={this.handleBlur('name')}
+                                        onChange={this.handleInputChange('name')}
                                     />
-                                    { console.log(this.state.newStaff.name) }
+                                    <FormFeedback>{errors.name}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -145,9 +197,12 @@ class StaffList extends Component  {
                                         placeholder="Ngày sinh"
                                         className="form-control"
                                         value={this.state.newStaff.doB}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.doB === ''}
+                                        invalid={errors.doB !== ''}
+                                        onBlur={this.handleBlur('doB')}
+                                        onChange={this.handleInputChange('doB')}
                                     />
-                                    { console.log(this.state.newStaff.doB) }
+                                    <FormFeedback>{errors.doB}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -157,9 +212,12 @@ class StaffList extends Component  {
                                         placeholder="Hệ số lương"
                                         className="form-control"
                                         value={this.state.newStaff.salaryScale}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.salaryScale === ''}
+                                        invalid={errors.salaryScale !== ''}
+                                        onBlur={this.handleBlur('salaryScale')}
+                                        onChange={this.handleInputChange('salaryScale')}
                                     />
-                                    { console.log(this.state.newStaff.salaryScale) }
+                                    <FormFeedback>{errors.salaryScale}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -170,9 +228,12 @@ class StaffList extends Component  {
                                         placeholder="Ngày vào công ty"
                                         className="form-control"
                                         value={this.state.newStaff.startDate}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.startDate === ''}
+                                        invalid={errors.startDate !== ''}
+                                        onBlur={this.handleBlur('startDate')}
+                                        onChange={this.handleInputChange('startDate')}
                                     />
-                                    { console.log(this.state.newStaff.startDate) }
+                                    <FormFeedback>{errors.startDate}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -182,9 +243,12 @@ class StaffList extends Component  {
                                         placeholder="Phòng ban"
                                         className="form-control"
                                         value={this.state.newStaff.department}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.department === ''}
+                                        invalid={errors.department !== ''}
+                                        onBlur={this.handleBlur('department')}
+                                        onChange={this.handleInputChange('department')}
                                     />
-                                    { console.log(this.state.newStaff.department) }
+                                    <FormFeedback>{errors.department}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -194,9 +258,12 @@ class StaffList extends Component  {
                                         placeholder="Số ngày nghỉ còn lại"
                                         className="form-control"
                                         value={this.state.newStaff.annualLeave}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.annualLeave === ''}
+                                        invalid={errors.annualLeave !== ''}
+                                        onBlur={this.handleBlur('annualLeave')}
+                                        onChange={this.handleInputChange('annualLeave')}
                                     />
-                                    { console.log(this.state.newStaff.annualLeave) }
+                                    <FormFeedback>{errors.annualLeave}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
@@ -206,9 +273,12 @@ class StaffList extends Component  {
                                         placeholder="Số ngày đã làm thêm"
                                         className="form-control"
                                         value={this.state.newStaff.overTime}
-                                        onChange={this.handleInputChange}
+                                        valid={errors.overTime === ''}
+                                        invalid={errors.overTime !== ''}
+                                        onBlur={this.handleBlur('overTime')}
+                                        onChange={this.handleInputChange('overTime')}
                                     />
-                                    { console.log(this.state.newStaff.overTime) }
+                                    <FormFeedback>{errors.overTime}</FormFeedback>
                                 </Col>
                             </Row>
                             <Row className="form-group m-2">
