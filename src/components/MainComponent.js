@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StaffList from './StaffListComponent';
 import Department from './DepartmentComponent';
 import Salary from './SalaryComponent';
-import StaffDetail from './StaffDetailComponent';
+// import StaffDetail from './StaffDetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
@@ -17,15 +17,15 @@ const mapStateToProps = state => {
 class Main extends Component {
     render() {
 
-        const StaffWithId = ({match}) => {
-            return(
-                <StaffDetail 
-                 staff={this.props.staffs.filter(
-                    (staff) => staff.id === parseInt(match.params.staffId,10)
-                 )[0]}
-                />
-            )
-        };
+        // const StaffWithId = ({match}) => {
+        //     return(
+        //         <StaffDetail 
+        //          staff={this.props.staffs.filter(
+        //             (staff) => staff.id === parseInt(match.params.staffId,10)
+        //          )[0]}
+        //         />
+        //     )
+        // };
 
         return (
             <div>
@@ -35,7 +35,7 @@ class Main extends Component {
                      () => <StaffList staffs={this.props.staffs} />
                     } />
 
-                    <Route path='/staff/:staffId' component={StaffWithId}/>
+                    {/* <Route path='/staff/:staffId' component={StaffWithId}/> */}
 
                     <Route exact path='/department' component={
                      () => <Department departs={this.props.staffs.map((staff) => staff.department)} />
