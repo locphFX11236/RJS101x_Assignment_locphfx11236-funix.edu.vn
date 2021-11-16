@@ -86,7 +86,6 @@ class StaffList extends Component  {
     render() {
         return (
             <div className="container">
-                { console.log(this.state.staffs) }
                 <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>

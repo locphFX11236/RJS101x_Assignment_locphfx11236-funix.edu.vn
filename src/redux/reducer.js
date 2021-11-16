@@ -1,9 +1,9 @@
-import { STAFFS } from '../shared/staffs.jsx';
+// import { STAFFS } from '../shared/staffs.jsx';
 
-export const initialState = {
-    staffs: STAFFS
-};
+// export const initialState = {
+//     staffs: STAFFS
+// };
 
-export const Reducer = (state = initialState, action) => {
-    return state;
-};
+// export const Reducer = (state = initialState, action) => {
+//     return state;
+// };

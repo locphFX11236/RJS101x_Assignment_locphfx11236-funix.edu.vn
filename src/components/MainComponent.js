@@ -19,11 +19,9 @@ class Main extends Component {
 
         const StaffWithId = ({match}) => {
             return(
-                <StaffDetail 
-                 staff={this.props.staffs.filter(
+                <StaffDetail staff={this.props.staffs.filter(
                     (staff) => staff.id === parseInt(match.params.staffId,10)
-                 )[0]}
-                />
+                )[0]} />
             )
         };
 
@@ -32,17 +30,19 @@ class Main extends Component {
                 <Header />
                 <Switch className="main">
                     <Route exact path='/staff' component={
-                     () => <StaffList staffs={this.props.staffs} />
+                        () => <StaffList staffs={this.props.staffs} />
                     } />
 
                     <Route path='/staff/:staffId' component={StaffWithId}/>
 
                     <Route exact path='/department' component={
-                     () => <Department departs={this.props.staffs.map((staff) => staff.department)} />
+                        () => <Department departs={this.props.staffs.map(
+                            (staff) => staff.department
+                        )} />
                     } />
 
                     <Route exact path='/salary' component={
-                     () => <Salary staffs={this.props.staffs} />
+                        () => <Salary staffs={this.props.staffs} />
                     } />
                     
                     <Redirect to="/staff" />
