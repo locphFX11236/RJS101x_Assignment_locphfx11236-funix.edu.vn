@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StaffList from './StaffListComponent';
 import Department from './DepartmentComponent';
 import Salary from './SalaryComponent';
-import StaffDetail from './StaffDetailComponent';
+import StaffDetail from './StaffdetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { STAFFS } from '../shared/staffs.jsx';
