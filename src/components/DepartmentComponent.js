@@ -2,6 +2,32 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+function Render ({departs}) {
+    console.log({departs})
+    const Count = x => departs.filter(depart => {
+        return (
+            depart[1].name !== undefined ?
+            depart[1].name === x :
+            depart[1] === x
+        )
+    }).length;
+    const Items = ["Sale", "HR", "Marketing", "IT", "Finance"];
+    const List = Items.map((Item) => {
+        return (
+            <div className="border col-12 col-md-5 col-lg-3 m-1">
+                <h3>{ Item }</h3>
+                <p>Số lượng nhân viên: { Count(Item) }</p>
+            </div>
+        )
+    })
+
+    return (
+        <div className="row justify-content-center card-body">
+            {List}
+        </div>
+    )
+}
+
 const Department = (props) => {
     return (
         <div className="container">
@@ -11,28 +37,7 @@ const Department = (props) => {
                     <BreadcrumbItem active>Department</BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            <div className="row justify-content-center card-body">
-                <div className="border col-12 col-md-5 col-lg-3 m-1">
-                    <h3>Sale</h3>
-                    <p>Số lượng nhân viên: {props.departs.filter(depart => depart.name === "Sale").length}</p>
-                </div>
-                <div className="border col-12 col-md-5 col-lg-3 m-1">
-                    <h3>HR</h3>
-                    <p>Số lượng nhân viên: {props.departs.filter(depart => depart.name === "HR").length} </p>
-                </div>
-                <div className="border col-12 col-md-5 col-lg-3 m-1">
-                    <h3>Marketing</h3>
-                    <p>Số lượng nhân viên: {props.departs.filter(depart => depart.name === "Marketing").length} </p>
-                </div>
-                <div className="border col-12 col-md-5 col-lg-3 m-1">
-                    <h3>IT</h3>
-                    <p>Số lượng nhân viên: {props.departs.filter(depart => depart.name === "IT").length} </p>
-                </div>
-                <div className="border col-12 col-md-5 col-lg-3 m-1">
-                    <h3>Finance</h3>
-                    <p>Số lượng nhân viên: {props.departs.filter(depart => depart.name === "Finance").length} </p>
-                </div>
-            </div>
+            <Render departs={props.departs} />
         </div>
     )
 }

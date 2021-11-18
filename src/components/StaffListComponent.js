@@ -53,25 +53,36 @@ class StaffList extends Component  {
 
     toggleModal() {
         this.setState({
-          isModalOpen: !this.state.isModalOpen
+            isModalOpen: !this.state.isModalOpen
         })
     }
 
     handleSubmit(values) {
-        const newStaff = {
-            id: this.props.staffs.length,
-            name: values.name,
-            doB: values.doB,
-            salaryScale: values.salaryScale,
-            startDate: values.startDate,
-            department: values.department,
-            annualLeave: values.annualLeave,
-            overTime: values.overTime,
-            image: '/assets/images/alberto.png',
-        };
-        this.setState({
-            staffs: this.state.staffs.concat([newStaff])
-        });
+        // const newStaff = {
+        //     id: this.props.staffs.length,
+        //     name: values.name,
+        //     doB: values.doB,
+        //     salaryScale: values.salaryScale,
+        //     startDate: values.startDate,
+        //     department: values.department,
+        //     annualLeave: values.annualLeave,
+        //     overTime: values.overTime,
+        //     image: '/assets/images/alberto.png',
+        // };
+        // this.setState({
+        //     staffs: this.state.staffs.concat([newStaff])
+        // });
+        this.props.addStaff(
+            this.props.staffs,
+            values.name,
+            values.doB,
+            Number(values.salaryScale),
+            values.startDate,
+            values.department,
+            Number(values.annualLeave),
+            Number(values.overTime),
+            '/assets/images/alberto.png'
+        );
         this.toggleModal();
     }
 
@@ -100,7 +111,7 @@ class StaffList extends Component  {
                         </Button>
                     </Row>
                 </Row>
-                <RenderStaffItem staffs={this.state.staffs} searchs={this.state.searchs}/>
+                <RenderStaffItem staffs={this.props.staffs} searchs={this.state.searchs}/>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>
@@ -111,6 +122,7 @@ class StaffList extends Component  {
                                     <Control.text model=".name" name="name"
                                         placeholder="Nhập tên"
                                         className="form-control"
+                                        defaultValue="aaa"
                                         validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
@@ -132,8 +144,8 @@ class StaffList extends Component  {
                                 <Col md={7}>
                                     <Control.text model=".doB" name="doB"
                                         type="date"
-                                        placeholder="Ngày sinh"
                                         className="form-control"
+                                        defaultValue="01/11/2021"
                                         validators={{ required }}
                                      />
                                     <Errors
@@ -148,8 +160,10 @@ class StaffList extends Component  {
                                 <Label htmlFor="salaryScale" md={5}>Hệ số lương</Label>
                                 <Col md={7}>
                                     <Control.text model=".salaryScale" name="salaryScale"
+                                        type="number"
                                         placeholder="Hệ số lương"
                                         className="form-control"
+                                        defaultValue="1"
                                         validators={{
                                             required, isNumber
                                         }}
@@ -170,8 +184,8 @@ class StaffList extends Component  {
                                 <Col md={7}>
                                     <Control.text model=".startDate" name="startDate"
                                         type="date"
-                                        placeholder="Ngày vào công ty"
                                         className="form-control"
+                                        defaultValue="04/11/2021"
                                         validators={{
                                             required
                                         }}
@@ -192,9 +206,8 @@ class StaffList extends Component  {
                                     <Control.text model=".department" name="department"
                                         placeholder="Phòng ban"
                                         className="form-control"
-                                        validators={{
-                                            required
-                                        }}
+                                        defaultValue="IT"
+                                        validators={{ required }}
                                     />
                                     <Errors
                                         className="text-danger"
@@ -210,8 +223,10 @@ class StaffList extends Component  {
                                 <Label htmlFor="annualLeave" md={5}>Số ngày nghỉ còn lại</Label>
                                 <Col md={7}>
                                     <Control.text model=".annualLeave" name="annualLeave"
+                                        type="number"
                                         placeholder="Số ngày nghỉ còn lại"
                                         className="form-control"
+                                        defaultValue="3"
                                         validators={{
                                             required, isNumber
                                         }}
@@ -231,8 +246,10 @@ class StaffList extends Component  {
                                 <Label htmlFor="overTime" md={5}>Số ngày đã làm thêm</Label>
                                 <Col md={7}>
                                     <Control.text model=".overTime" name="overTime"
+                                        type="number"
                                         placeholder="Số ngày đã làm thêm"
                                         className="form-control"
+                                        defaultValue="4"
                                         validators={{
                                             required, isNumber
                                         }}
