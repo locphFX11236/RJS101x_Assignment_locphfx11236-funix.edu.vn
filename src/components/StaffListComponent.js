@@ -36,8 +36,6 @@ class StaffList extends Component  {
     
         this.state = {
             isModalOpen: false,
-            searchs: [],
-            staffs: this.props.staffs,
             newStaff: {
                 id: '',
                 name: '',
@@ -76,6 +74,7 @@ class StaffList extends Component  {
         this.setState({
             touched: { ...this.state.touched, [field]: true }
         });
+        e.preventDefault();
     }
 
     handleInputChange = (field) => (e) => {
@@ -86,10 +85,10 @@ class StaffList extends Component  {
         this.setState({
             newStaff: {
                 ...NewStaff,
-                [field]: [NewStaff][field],
-                id: this.state.staffs.length,
+                [field]: NewStaff[field],
+                id: this.props.staffs.length,
                 image: '/assets/images/alberto.png',
-                
+
                 [name]: value
             }
         });
@@ -134,19 +133,21 @@ class StaffList extends Component  {
     }
 
     handleSubmit(e) {
-        this.setState({
-            staffs: this.state.staffs.concat([this.state.newStaff])
-        });
+        const addStaff = {
+            type: 'ADD_STAFF',
+            payload: this.state.newStaff
+        };
+        this.props.addStaff(addStaff);
         this.toggleModal();
         e.preventDefault();
     }
 
     handleSearch(e) {
-        this.setState({
-            searchs: this.state.staffs.filter(
-                (staff) => staff.name.toLowerCase().includes(this.search.value)
-            )
-        })
+        const searchStaff = {
+            type: 'SEARCH_STAFF',
+            payload: this.search.value
+        };
+        this.props.searchStaff(searchStaff);
         e.preventDefault();
     }
 
@@ -169,11 +170,11 @@ class StaffList extends Component  {
                         </Button>
                     </Form>
                 </Row>
-                <RenderStaffItem staffs={this.state.staffs} searchs={this.state.searchs}/>
+                <RenderStaffItem staffs={this.props.staffs} searchs={this.props.searchs}/>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>
-                    <Form onSubmit={this.handleSubmit}>
+                        <Form onSubmit={this.handleSubmit}>
                             <Row className="form-group m-2">
                                 <Label htmlFor="name" md={5}>Nhập tên</Label>
                                 <Col md={7}>

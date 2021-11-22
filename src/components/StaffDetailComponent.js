@@ -10,9 +10,9 @@ function Render({ staff }) {
             <div className="col-12 col-md-8 col-lg-9 text-left">
                 <h4>Họ và tên: {staff.name}</h4>
                 <p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
-                <p>Ngày vào công ty: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
-                <p>Phòng ban: {staff.department.name}</p>
-                <p>Chức danh: {[staff.department][0].id}</p>
+                <p>Ngày vào công ty: {dateFormat(staff.startDate, "dd/mm/yyyy")}</p>
+                <p>Phòng ban: {staff.department.name !== undefined ? staff.department.name : staff.department }</p>
+                <p>Chức danh: {[staff.department][0].id !== undefined ? [staff.department][0].id : staff.department }</p>
                 <p>Số ngày nghỉ còn lại: {staff.annualLeave}</p>
                 <p>Số ngày đã làm thêm: {staff.overTime}</p>
             </div>

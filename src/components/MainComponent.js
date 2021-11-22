@@ -10,20 +10,24 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-      staffs: state.staffs
+        staffs: state.staffs,
+        searchs: state.searchs
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    addStaff: ( addStaff ) => dispatch( addStaff ),
+    searchStaff: (searchStaff) => dispatch( searchStaff )
+})
 
 class Main extends Component {
     render() {
 
         const StaffWithId = ({match}) => {
             return(
-                <StaffDetail 
-                 staff={this.props.staffs.filter(
+                <StaffDetail staff={this.props.staffs.filter(
                     (staff) => staff.id === parseInt(match.params.staffId,10)
-                 )[0]}
-                />
+                )[0]} />
             )
         };
 
@@ -31,8 +35,13 @@ class Main extends Component {
             <div>
                 <Header />
                 <Switch className="main">
-                    <Route exact path='/staff' component={
-                     () => <StaffList staffs={this.props.staffs} />
+                <Route exact path='/staff' component={
+                        () => <StaffList
+                            staffs={this.props.staffs}
+                            searchs={this.props.searchs}
+                            addStaff={this.props.addStaff}
+                            searchStaff={this.props.searchStaff}
+                        />
                     } />
 
                     <Route path='/staff/:staffId' component={StaffWithId}/>
@@ -53,4 +62,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
