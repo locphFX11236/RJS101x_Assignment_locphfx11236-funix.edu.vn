@@ -10,39 +10,48 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-      staffs: state.staffs
+        staffs: state.staffs,
+        searchs: state.searchs
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    addStaff: ( addStaff ) => dispatch( addStaff ),
+    searchStaff: (searchStaff) => dispatch( searchStaff )
+})
 
 class Main extends Component {
     render() {
 
         const StaffWithId = ({match}) => {
             return(
-                <StaffDetail 
-                 staff={this.props.staffs.filter(
+                <StaffDetail staff={this.props.staffs.filter(
                     (staff) => staff.id === parseInt(match.params.staffId,10)
-                 )[0]}
-                />
+                )[0]} />
             )
-        };
+        }
 
         return (
             <div>
                 <Header />
                 <Switch className="main">
                     <Route exact path='/staff' component={
-                     () => <StaffList staffs={this.props.staffs} />
+                        () => <StaffList
+                            staffs={this.props.staffs}
+                            searchs={this.props.searchs}
+                            addStaff={this.props.addStaff}
+                            searchStaff={this.props.searchStaff}
+                        />
                     } />
 
                     <Route path='/staff/:staffId' component={StaffWithId}/>
 
                     <Route exact path='/department' component={
-                     () => <Department departs={this.props.staffs.map((staff) => staff.department)} />
+                        () => <Department departs={this.props.staffs.map((staff) => staff.department)} />
                     } />
 
                     <Route exact path='/salary' component={
-                     () => <Salary staffs={this.props.staffs} />
+                        () => <Salary staffs={this.props.staffs} />
                     } />
                     
                     <Redirect to="/staff" />
@@ -53,4 +62,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

@@ -7,7 +7,7 @@ import { Breadcrumb, BreadcrumbItem,
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
-function RenderStaffItem ({ staffs, searchs }) {
+function RenderStaffItem ( {staffs, searchs} ) {
     let Items = staffs
     if (searchs.length !== 0) { Items = searchs }
     const List = Items.map((staff) => {
@@ -42,8 +42,6 @@ class StaffList extends Component  {
     
         this.state = {
             isModalOpen: false,
-            searchs: [],
-            staffs: this.props.staffs
         };
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -58,35 +56,35 @@ class StaffList extends Component  {
     }
 
     handleSubmit(values) {
-        const newStaff = {
-            id: this.props.staffs.length,
-            name: values.name,
-            doB: values.doB,
-            salaryScale: values.salaryScale,
-            startDate: values.startDate,
-            department: values.department,
-            annualLeave: values.annualLeave,
-            overTime: values.overTime,
-            image: '/assets/images/alberto.png',
+        const addStaff = {
+            type: 'ADD_STAFF',
+            payload: {
+                id: this.props.staffs.length,
+                name: values.name,
+                doB: values.doB,
+                salaryScale: Number(values.salaryScale),
+                startDate: values.startDate,
+                department: values.department,
+                annualLeave: Number(values.annualLeave),
+                overTime: Number(values.overTime),
+                image: '/assets/images/alberto.png'
+            }
         };
-        this.setState({
-            staffs: this.state.staffs.concat([newStaff])
-        });
+        this.props.addStaff(addStaff);
         this.toggleModal();
     }
 
     handleSearch() {
-        this.setState({
-            searchs: this.state.staffs.filter(
-                (staff) => staff.name.toLowerCase().includes(this.search.value)
-            )
-        })
+        const searchStaff = {
+            type: 'SEARCH_STAFF',
+            payload: this.search.value
+        };
+        this.props.searchStaff(searchStaff)
     }
 
     render() {
         return (
             <div className="container">
-                { console.log(this.state.staffs) }
                 <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem active>Staffs List</BreadcrumbItem>
@@ -101,7 +99,7 @@ class StaffList extends Component  {
                         </Button>
                     </Row>
                 </Row>
-                <RenderStaffItem staffs={this.state.staffs} searchs={this.state.searchs}/>
+                <RenderStaffItem staffs={this.props.staffs} searchs={this.props.searchs}/>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>

@@ -3,7 +3,6 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function Render ({departs}) {
-    console.log({departs})
     const Count = x => departs.filter(depart => {
         return (
             depart.name !== undefined ?
