@@ -1,16 +1,30 @@
 import * as ActionTypes from './ActionTypes';
+import { STAFFS } from '../shared/staffs';
 
-export const addStaff = (id, name, doB, salaryScale, startDate, department, annualLeave, overTime, image) => ({
+export const addStaff = ( newStaff ) => ({
     type: ActionTypes.ADD_STAFF,
-    payload: {
-        id: id,
-        name: name,
-        doB: doB,
-        salaryScale: salaryScale,
-        startDate: startDate,
-        department: department,
-        annualLeave: annualLeave,
-        overTime: overTime,
-        image: image
-    }
+    payload: newStaff
+});
+
+export const fetchStaffs = () => (dispatch) => {
+
+    dispatch(staffsLoading(true));
+
+    setTimeout(() => {
+        dispatch(addStaffs(STAFFS));
+    }, 2000);
+}
+
+export const staffsLoading = () => ({
+    type: ActionTypes.STAFFS_LOADING
+});
+
+export const staffsFailed = (errmess) => ({
+    type: ActionTypes.STAFFS_FAILED,
+    payload: errmess
+});
+
+export const addStaffs = (staffs) => ({
+    type: ActionTypes.ADD_STAFFS,
+    payload: staffs
 });
