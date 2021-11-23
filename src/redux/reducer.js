@@ -2,7 +2,8 @@ import { STAFFS } from '../shared/staffs.jsx';
 
 export const initialState = {
     staffs: STAFFS,
-    searchs: []
+    searchs: [],
+    searchValue: ''
 }
 
 export const Reducer = ( state = initialState, action ) => {
@@ -13,9 +14,13 @@ export const Reducer = ( state = initialState, action ) => {
 
         case 'SEARCH_STAFF':
             return(
-                state = { ...state, searchs: state.staffs.filter(
-                    (staff) => staff.name.toLowerCase().includes(action.payload)
-                ) }
+                state = {
+                    ...state,
+                    searchs: state.staffs.filter(
+                        (staff) => staff.name.toLowerCase().includes(action.payload)
+                    ),
+                    searchValue: action.payload
+                }
             )
 
         default:

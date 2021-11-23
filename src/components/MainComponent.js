@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 const mapStateToProps = state => {
     return {
         staffs: state.staffs,
-        searchs: state.searchs
+        searchs: state.searchs,
+        searchValue: state.searchValue
     }
 }
 
@@ -41,6 +42,7 @@ class Main extends Component {
                             searchs={this.props.searchs}
                             addStaff={this.props.addStaff}
                             searchStaff={this.props.searchStaff}
+                            searchValue={this.props.searchValue}
                         />
                     } />
 

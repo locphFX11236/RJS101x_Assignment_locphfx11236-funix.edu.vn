@@ -7,9 +7,9 @@ import { Breadcrumb, BreadcrumbItem,
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
-function RenderStaffItem ( {staffs, searchs} ) {
+function RenderStaffItem ( {staffs, searchs, searchValue} ) {
     let Items = staffs
-    if (searchs.length !== 0) { Items = searchs }
+    if (searchValue !== '' || searchs.length !== 0) { Items = searchs }
     const List = Items.map((staff) => {
         return ( 
            <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
@@ -99,7 +99,11 @@ class StaffList extends Component  {
                         </Button>
                     </Row>
                 </Row>
-                <RenderStaffItem staffs={this.props.staffs} searchs={this.props.searchs}/>
+                <RenderStaffItem
+                    staffs={this.props.staffs}
+                    searchs={this.props.searchs}
+                    searchValue={this.props.searchValue}
+                />
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                     <ModalBody>
