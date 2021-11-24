@@ -7,6 +7,7 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { actions } from 'react-redux-form';
 import { addStaff, fetchStaffs } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
@@ -19,7 +20,8 @@ const mapDispatchToProps = dispatch => ({
     addStaff: (id, name, doB, salaryScale, startDate, department, annualLeave, overTime, image) => dispatch(
         addStaff(id, name, doB, salaryScale, startDate, department, annualLeave, overTime, image)
     ),
-    fetchStaffs: () => { dispatch(fetchStaffs())}
+    fetchStaffs: () => { dispatch(fetchStaffs())},
+    resetModalForm: () => { dispatch(actions.reset('modalForm'))}
 });
 
 class Main extends Component {
@@ -32,7 +34,7 @@ class Main extends Component {
         const StaffWithId = ({match}) => {
             return(
                 <StaffDetail
-                    staff={this.props.staffs.filter(
+                    staff={this.props.staffs.staffs.filter(
                         (staff) => staff.id === parseInt(match.params.staffId,10)
                     )[0]}
                     isLoading={this.props.staffs.isLoading}
@@ -51,6 +53,7 @@ class Main extends Component {
                             staffsLoading={this.props.staffs.isLoading}
                             staffsErrMess={this.props.staffs.errMess}
                             addStaff={this.props.addStaff}
+                            resetModalForm={this.props.resetModalForm}
                         />
                     } />
 

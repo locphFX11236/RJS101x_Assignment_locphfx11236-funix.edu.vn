@@ -4,7 +4,7 @@ import { Breadcrumb, BreadcrumbItem,
     Modal, ModalHeader, ModalBody,
     Button, Row, Col, Label, Input
 } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, Form, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
@@ -73,6 +73,7 @@ class StaffList extends Component  {
         }
         this.props.addStaff( newStaff );
         this.toggleModal();
+        this.props.resetModalForm();
     }
 
     handleSearch() {
@@ -129,7 +130,7 @@ class StaffList extends Component  {
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                         <ModalBody>
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                            <Form model="modalForm" onSubmit={(values) => this.handleSubmit(values)}>
                                 <Row className="form-group m-2">
                                     <Label htmlFor="name" md={5}>Nhập tên</Label>
                                     <Col md={7}>
@@ -286,7 +287,7 @@ class StaffList extends Component  {
                                         </Button>
                                     </Col>
                                 </Row>
-                            </LocalForm>
+                            </Form>
                         </ModalBody>
                     </Modal>
                 </div>
