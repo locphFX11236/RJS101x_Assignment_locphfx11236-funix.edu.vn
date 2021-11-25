@@ -8,6 +8,7 @@ import { Control, Form, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { localUrl } from '../shared/baseUrl';
+import { FadeTransform } from 'react-animation-components';
 
 function Render ({ staffs, searchs, searchValue }) {
     let Items = staffs.staffs
@@ -15,10 +16,12 @@ function Render ({ staffs, searchs, searchValue }) {
     const List = Items.map((staff) => {
         return (
             <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
+                <FadeTransform in transformProps={ { exitTransform: 'scale(0.5) translateY(-50%)' } } >
                     <Link to={ `/staff/${ staff.id }` } >
                         <CardImg width="100%" src={ localUrl + staff.image } alt={ staff.name } />
                         <CardText>{ staff.name }</CardText>
                     </Link>
+                </FadeTransform>
             </Card>
         )
     })
