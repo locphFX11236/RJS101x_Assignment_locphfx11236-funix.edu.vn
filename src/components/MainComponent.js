@@ -8,11 +8,13 @@ import Footer from './FooterComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
-import { addStaff, fetchStaffs } from '../redux/ActionCreators';
+import { addStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
-        staffs: state.staffs
+        staffs: state.staffs,
+        departs: state.departs,
+        salarys: state.salarys
     }
 };
 
@@ -21,12 +23,16 @@ const mapDispatchToProps = dispatch => ({
         addStaff(id, name, doB, salaryScale, startDate, department, annualLeave, overTime, image)
     ),
     fetchStaffs: () => { dispatch(fetchStaffs())},
-    resetModalForm: () => { dispatch(actions.reset('modalForm'))}
+    resetModalForm: () => { dispatch(actions.reset('modalForm'))},
+    fetchDeparts: () => { dispatch(fetchDeparts())},
+    fetchSalarys: () => { dispatch(fetchSalarys())}
 });
 
 class Main extends Component {
     componentDidMount() {
         this.props.fetchStaffs();
+        this.props.fetchDeparts();
+        this.props.fetchSalarys()
     }
 
     render() {
@@ -61,13 +67,17 @@ class Main extends Component {
 
                     <Route exact path='/department' component={
                         () => <Department
-                            departs={ this.props.staffs.staffs.map( (staff) => [staff.id, staff.department] ) }
+                            departs={ this.props.departs }
+                            departsLoading={ this.props.departs.isLoading }
+                            departsErrMess={ this.props.departs.errMess }
                         />
                     } />
 
                     <Route exact path='/salary' component={
                         () => <Salary
-                            staffs={this.props.staffs.staffs}
+                            salarys={ this.props.salarys }
+                            salarysLoading={ this.props.salarys.isLoading }
+                            salarysErrMess={ this.props.salarys.errMess }
                         />
                     } />
                     

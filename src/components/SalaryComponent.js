@@ -1,39 +1,60 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
 
-const Salary = (props) => {
-    const List = props.staffs.map((staff) => {
-
-        const basicSalary = 3000000;
-        const overTimeSalary = 200000;
-        let salary = Math.round((parseFloat(staff.salaryScale) * basicSalary) + (parseFloat(staff.overTime) * overTimeSalary)) ;
-        Object.assign(staff, { 'salary': salary });
-
+function Render ( {salarys} ) {
+    const List = salarys.salarys.map(( salary ) => {
         return ( 
             <div className="border col-12 col-md-5 col-lg-3 m-1">
-                <h3>{staff.name}</h3>
-                <p>Mã nhân viên: {staff.id}</p>
-                <p>Hệ số lương: {staff.salaryScale}</p>
-                <p>Số giờ làm thêm: {staff.overTime}</p>
-                <p className="border">Lương: {staff.salary}</p>
+                <h3>{ salary.name }</h3>
+                <p>Mã nhân viên: { salary.id }</p>
+                <p>Hệ số lương: { salary.salaryScale }</p>
+                <p>Số giờ làm thêm: { salary.overTime }</p>
+                <p className="border">Lương: { salary.salary }</p>
             </div>
         )
-    });
+    })
 
-    return (
-        <div className="container">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>Salary</BreadcrumbItem>
-                </Breadcrumb>
-            </div>
-            <div className="row justify-content-center card-body">
-                {List}
-            </div>
+    return(
+        <div className="row justify-content-center card-body">
+            {List}
         </div>
     )
+}
+
+const Salary = (props) => {
+    if ( props.salarys.isLoading ) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
+                </div>
+            </div>
+        );
+    } else if ( props.salarys.errMess ) {
+        return(
+            <div className="container">
+                <div className="row"> 
+                    <div className="col-12">
+                        <h4>{ props.salarys.errMess }</h4>
+                    </div>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>Salary</BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+                <Render salarys={ props.salarys } />
+            </div>
+        )
+    }
 }
 
 export default Salary;

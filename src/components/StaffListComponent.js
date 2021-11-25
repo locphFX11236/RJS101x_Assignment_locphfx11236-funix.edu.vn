@@ -7,6 +7,7 @@ import { Breadcrumb, BreadcrumbItem,
 import { Control, Form, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { localUrl } from '../shared/baseUrl';
 
 function RenderStaffItem ({ staffs, searchs, searchValue }) {
     let Items = staffs.staffs
@@ -15,12 +16,12 @@ function RenderStaffItem ({ staffs, searchs, searchValue }) {
         return (
             <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
                     <Link to={`/staff/${staff.id}`} >
-                        <CardImg src={staff.image} alt={staff.name} />
+                        <CardImg width="100%" src={ localUrl + staff.image } alt={staff.name} />
                         <CardText>{staff.name}</CardText>
                     </Link>
             </Card>
         )
-    });
+    })
 
     return (
         <div className="container">
@@ -69,7 +70,7 @@ class StaffList extends Component  {
             department: values.department,
             annualLeave: Number(values.annualLeave),
             overTime: Number(values.overTime),
-            image: '/assets/images/alberto.png'
+            image: '/asset/images/alberto.png'
         }
         this.props.addStaff( newStaff );
         this.toggleModal();
