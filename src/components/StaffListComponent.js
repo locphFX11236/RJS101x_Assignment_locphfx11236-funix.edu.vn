@@ -24,10 +24,8 @@ function Render ({ staffs, searchs, searchValue }) {
     })
 
     return (
-        <div className="container">
-            <div className="row justify-content-center card-body">
-                {List}
-            </div>
+        <div className="row justify-content-center card-body">
+            {List}
         </div>
     )
 }

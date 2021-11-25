@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import StaffList from './StaffListComponent';
 import Department from './DepartmentComponent';
 import Salary from './SalaryComponent';
 import StaffDetail from './StaffDetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { actions } from 'react-redux-form';
 import { addStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
@@ -19,13 +20,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    addStaff: (id, name, doB, salaryScale, startDate, department, annualLeave, overTime, image) => dispatch(
-        addStaff(id, name, doB, salaryScale, startDate, department, annualLeave, overTime, image)
-    ),
-    fetchStaffs: () => { dispatch(fetchStaffs())},
-    resetModalForm: () => { dispatch(actions.reset('modalForm'))},
-    fetchDeparts: () => { dispatch(fetchDeparts())},
-    fetchSalarys: () => { dispatch(fetchSalarys())}
+    addStaff: ( newStaff ) => dispatch( addStaff( newStaff ) ),
+    fetchStaffs: () => { dispatch( fetchStaffs() ) },
+    resetModalForm: () => { dispatch( actions.reset( 'modalForm' ) ) },
+    fetchDeparts: () => { dispatch( fetchDeparts() ) },
+    fetchSalarys: () => { dispatch( fetchSalarys() ) }
 });
 
 class Main extends Component {
@@ -47,42 +46,46 @@ class Main extends Component {
                     errMess={this.props.staffs.errMess}
                 />
             )
-        };
+        }
 
         return (
             <div>
                 <Header />
-                <Switch className="main">
-                    <Route exact path='/staff' component={
-                        () => <StaffList
-                            staffs={this.props.staffs}
-                            staffsLoading={this.props.staffs.isLoading}
-                            staffsErrMess={this.props.staffs.errMess}
-                            addStaff={this.props.addStaff}
-                            resetModalForm={this.props.resetModalForm}
-                        />
-                    } />
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                        <Switch className="main" location={this.props.location}>
+                            <Route exact path='/staff' component={
+                                () => <StaffList
+                                    staffs={this.props.staffs}
+                                    staffsLoading={this.props.staffs.isLoading}
+                                    staffsErrMess={this.props.staffs.errMess}
+                                    addStaff={this.props.addStaff}
+                                    resetModalForm={this.props.resetModalForm}
+                                />
+                            } />
 
-                    <Route path='/staff/:staffId' component={StaffWithId}/>
+                            <Route path='/staff/:staffId' component={StaffWithId}/>
 
-                    <Route exact path='/department' component={
-                        () => <Department
-                            departs={ this.props.departs }
-                            departsLoading={ this.props.departs.isLoading }
-                            departsErrMess={ this.props.departs.errMess }
-                        />
-                    } />
+                            <Route exact path='/department' component={
+                                () => <Department
+                                    departs={ this.props.departs }
+                                    departsLoading={ this.props.departs.isLoading }
+                                    departsErrMess={ this.props.departs.errMess }
+                                />
+                            } />
 
-                    <Route exact path='/salary' component={
-                        () => <Salary
-                            salarys={ this.props.salarys }
-                            salarysLoading={ this.props.salarys.isLoading }
-                            salarysErrMess={ this.props.salarys.errMess }
-                        />
-                    } />
-                    
-                    <Redirect to="/staff" />
-                </Switch>
+                            <Route exact path='/salary' component={
+                                () => <Salary
+                                    salarys={ this.props.salarys }
+                                    salarysLoading={ this.props.salarys.isLoading }
+                                    salarysErrMess={ this.props.salarys.errMess }
+                                />
+                            } />
+                            
+                            <Redirect to="/staff" />
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
                 <Footer />
             </div>
         )
