@@ -19,6 +19,5 @@ export const ConfigureStore = () => {
         }),
         applyMiddleware( thunk, logger )
     );
-    console.log(store.getState())
     return store;
 }

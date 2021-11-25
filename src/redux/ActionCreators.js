@@ -11,8 +11,21 @@ export const fetchStaffs = () => (dispatch) => {
     dispatch(staffsLoading(true));
 
     return fetch(staffsUrl)
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
     .then(response => response.json())
-    .then(staffs => dispatch(addStaffs(staffs)));
+    .then(staffs => dispatch(addStaffs(staffs)))
+    .catch(error => dispatch(staffsFailed(error.message)))
 }
 
 export const staffsLoading = () => ({
@@ -30,13 +43,29 @@ export const addStaffs = (staffs) => ({
 })
 
 
+//---------------------------------------------
+
+
 export const fetchDeparts = () => (dispatch) => {
 
     dispatch(departsLoading(true));
 
     return fetch(departsUrl)
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
     .then(response => response.json())
-    .then(departs => dispatch(addDeparts(departs)));
+    .then(departs => dispatch(addDeparts(departs)))
+    .catch(error => dispatch(departsFailed(error.message)))
 }
 
 export const departsLoading = () => ({
@@ -54,13 +83,29 @@ export const addDeparts = (departs) => ({
 })
 
 
+//---------------------------------------------
+
+
 export const fetchSalarys = () => (dispatch) => {
 
     dispatch(salarysLoading(true));
 
     return fetch(salarysUrl)
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+    })
     .then(response => response.json())
-    .then(salarys => dispatch(addSalarys(salarys)));
+    .then(salarys => dispatch(addSalarys(salarys)))
+    .catch(error => dispatch(salarysFailed(error.message)))
 }
 
 export const salarysLoading = () => ({

@@ -9,15 +9,15 @@ import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { localUrl } from '../shared/baseUrl';
 
-function RenderStaffItem ({ staffs, searchs, searchValue }) {
+function Render ({ staffs, searchs, searchValue }) {
     let Items = staffs.staffs
     if (searchValue !== '' || searchs.length !== 0) { Items = searchs }
     const List = Items.map((staff) => {
         return (
             <Card key={staff.id} className="border col-6 col-md-4 col-lg-2" >
-                    <Link to={`/staff/${staff.id}`} >
-                        <CardImg width="100%" src={ localUrl + staff.image } alt={staff.name} />
-                        <CardText>{staff.name}</CardText>
+                    <Link to={ `/staff/${ staff.id }` } >
+                        <CardImg width="100%" src={ localUrl + staff.image } alt={ staff.name } />
+                        <CardText>{ staff.name }</CardText>
                     </Link>
             </Card>
         )
@@ -123,7 +123,7 @@ class StaffList extends Component  {
                             </Button>
                         </Row>
                     </Row>
-                    <RenderStaffItem
+                    <Render
                         staffs={this.props.staffs}
                         searchs={this.state.searchs}
                         searchValue={this.state.searchValue}
