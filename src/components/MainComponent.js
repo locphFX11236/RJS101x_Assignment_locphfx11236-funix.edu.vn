@@ -9,7 +9,7 @@ import Salary from './SalaryComponent';
 import StaffDetail from './StaffDetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import { addStaff, searchStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
+import { postStaff, searchStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -20,8 +20,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    addStaff: ( newStaff ) => dispatch( addStaff( newStaff ) ),
-    searchStaff: (searchData) => dispatch( searchStaff( searchData ) ),
+    postStaff: ( newStaff ) => dispatch( postStaff( newStaff ) ),
+    searchStaff: ( searchData ) => dispatch( searchStaff( searchData ) ),
     fetchStaffs: () => { dispatch( fetchStaffs() ) },
     resetModalForm: () => { dispatch( actions.reset( 'modalForm' ) ) },
     fetchDeparts: () => { dispatch( fetchDeparts() ) },
@@ -49,10 +49,8 @@ class Main extends Component {
             )
         }
 
-        // console.log(this.props.searchData)
-
         return (
-            <div>
+            <div className="App text-center">
                 <Header />
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
@@ -62,10 +60,9 @@ class Main extends Component {
                                     staffs={this.props.staffs}
                                     staffsLoading={this.props.staffs.isLoading}
                                     staffsErrMess={this.props.staffs.errMess}
-                                    addStaff={this.props.addStaff}
                                     resetModalForm={this.props.resetModalForm}
                                     searchStaff={this.props.searchStaff}
-                                    // searchData={this.props.searchData}
+                                    postStaff={this.props.postStaff}
                                 />
                             } />
 

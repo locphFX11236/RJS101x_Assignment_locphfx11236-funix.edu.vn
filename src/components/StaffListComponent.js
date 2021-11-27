@@ -42,7 +42,7 @@ class StaffList extends Component  {
         this.state = {
             isModalOpen: false,
         };
-        console.log(this.props.staffs)
+        
         this.toggleModal = this.toggleModal.bind(this);
     }
 
@@ -84,15 +84,13 @@ class StaffList extends Component  {
                             searchStaff={this.props.searchStaff}
                         />
                     </Row>
-                    <Render
-                        staffs={this.props.staffs}
-                    />
+                    <Render staffs={this.props.staffs} />
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                         <ModalBody>
                             <ModalForm
-                                addStaff={this.props.addStaff}
                                 resetModalForm={this.props.resetModalForm}
+                                postStaff={this.props.postStaff}
                             />
                         </ModalBody>
                     </Modal>

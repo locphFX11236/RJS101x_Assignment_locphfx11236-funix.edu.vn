@@ -10,8 +10,7 @@ export const Staffs = (state = {
         case ActionTypes.ADD_STAFF:
             let newStaff = action.payload;
             newStaff.id = state.staffs.length;
-            console.log("New Staff: ", newStaff);
-            return state = { ...state, staffs: state.staffs.concat([newStaff])};
+            return { ...state, staffs: state.staffs.concat([newStaff])};
 
         case ActionTypes.SEARCH_STAFF:
             return {...state, searchData: action.payload};

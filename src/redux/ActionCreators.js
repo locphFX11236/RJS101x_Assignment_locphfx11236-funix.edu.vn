@@ -11,6 +11,32 @@ export const searchStaff = ( searchData ) => ({
     payload: searchData
 })
 
+export const postStaff = ( newStaff ) => (dispatch) => {
+
+    return fetch( staffsUrl , {
+        method: "POST",
+        body: JSON.stringify( newStaff ),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+    }, error => {
+        throw error;
+    })
+    .then(response => response.json())
+    .then( response => dispatch( addStaff( response ) ) )
+    .catch(error =>  { console.log('post staffs', error.message); alert('Your comment could not be posted\nError: '+error.message); })
+}
+
 export const fetchStaffs = () => (dispatch) => {
 
     dispatch(staffsLoading(true));

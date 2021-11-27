@@ -27,8 +27,8 @@ class ModalForm extends Component  {
             overTime: Number(values.overTime),
             image: '/asset/images/alberto.png'
         }
-        this.props.addStaff( newStaff );
-        this.props.resetModalForm();
+        this.props.postStaff( newStaff )
+        this.props.resetModalForm()
     }
 
     render() {

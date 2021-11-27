@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Row, Input } from 'reactstrap';
-// import { connect } from 'react-redux';
 
 class Search extends Component  {
 
     constructor(props) {
         super(props);
+
         this.handleSearch = this.handleSearch.bind(this);
     }
 
@@ -22,10 +22,13 @@ class Search extends Component  {
     render() {
         return(
             <Row className="col-12 col-md-5 justify-content-end" >
-                <Input className="col-10" type="search" placeholder="Search"
-                innerRef={(input) => this.search = input}/>
-                <Button className="col-2" type="button"
-                onClick={this.handleSearch}>
+                <Input
+                    className="col-10"
+                    type="search"
+                    placeholder="Search"
+                    innerRef={(input) => this.search = input}
+                />
+                <Button onClick={this.handleSearch} className="col-2" type="button">
                     <i class="fa fa-search"></i>
                 </Button>
             </Row>

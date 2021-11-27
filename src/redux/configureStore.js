@@ -13,12 +13,10 @@ export const ConfigureStore = () => {
             staffs: Staffs,
             departs: Departs,
             salarys: Salarys,
-            ...createForms({
-                modalForm: InitialModal
-            })
+            ...createForms( { modalForm: InitialModal } )
         }),
         applyMiddleware( thunk, logger )
-    );
-    console.log( store.getState() )
-    return store;
+    )
+
+    return store
 }

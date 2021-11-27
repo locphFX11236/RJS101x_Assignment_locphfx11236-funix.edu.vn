@@ -13,12 +13,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div className="App text-center">
-            <Main />
-          </div>
+          <Main />
         </BrowserRouter>
       </Provider>
-    );
+    )
   }
 }
 
