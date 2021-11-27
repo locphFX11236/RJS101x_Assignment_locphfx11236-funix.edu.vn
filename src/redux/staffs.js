@@ -3,6 +3,7 @@ import * as ActionTypes from './ActionTypes';
 export const Staffs = (state = {
     isLoading: true,
     errMess: null,
+    searchData: [],
     staffs: []
 }, action) => {
     switch (action.type) {
@@ -12,6 +13,9 @@ export const Staffs = (state = {
             console.log("New Staff: ", newStaff);
             return state = { ...state, staffs: state.staffs.concat([newStaff])};
 
+        case ActionTypes.SEARCH_STAFF:
+            return {...state, searchData: action.payload};
+    
         case ActionTypes.ADD_STAFFS:
             return {...state, isLoading: false, errMess: null, staffs: action.payload};
 

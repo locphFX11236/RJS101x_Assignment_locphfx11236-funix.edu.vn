@@ -9,7 +9,7 @@ import Salary from './SalaryComponent';
 import StaffDetail from './StaffDetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import { addStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
+import { addStaff, searchStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -21,6 +21,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     addStaff: ( newStaff ) => dispatch( addStaff( newStaff ) ),
+    searchStaff: (searchData) => dispatch( searchStaff( searchData ) ),
     fetchStaffs: () => { dispatch( fetchStaffs() ) },
     resetModalForm: () => { dispatch( actions.reset( 'modalForm' ) ) },
     fetchDeparts: () => { dispatch( fetchDeparts() ) },
@@ -48,6 +49,8 @@ class Main extends Component {
             )
         }
 
+        // console.log(this.props.searchData)
+
         return (
             <div>
                 <Header />
@@ -61,6 +64,8 @@ class Main extends Component {
                                     staffsErrMess={this.props.staffs.errMess}
                                     addStaff={this.props.addStaff}
                                     resetModalForm={this.props.resetModalForm}
+                                    searchStaff={this.props.searchStaff}
+                                    // searchData={this.props.searchData}
                                 />
                             } />
 

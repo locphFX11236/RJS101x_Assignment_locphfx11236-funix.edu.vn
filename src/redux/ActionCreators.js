@@ -4,7 +4,12 @@ import { staffsUrl, departsUrl, salarysUrl } from '../shared/baseUrl';
 export const addStaff = ( newStaff ) => ({
     type: ActionTypes.ADD_STAFF,
     payload: newStaff
-});
+})
+
+export const searchStaff = ( searchData ) => ({
+    type: ActionTypes.SEARCH_STAFF,
+    payload: searchData
+})
 
 export const fetchStaffs = () => (dispatch) => {
 
