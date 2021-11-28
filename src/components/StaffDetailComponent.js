@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 import { Loading } from './LoadingComponent';
@@ -29,6 +29,14 @@ function Render({ staff }) {
 }
 
 const  StaffDetail = ( props ) => {
+    function DeleteStaff () {
+        return props.deleteStaff(props.staff.id)
+    }
+
+    const UpdateStaff = () => {
+        return console.log("u")
+    }
+
     if ( props.isLoading ) {
         return(
             <div className="container">
@@ -45,21 +53,37 @@ const  StaffDetail = ( props ) => {
                 </div>
             </div>
         );
-    } else if ( props.staff != null ) {
+    } else if ( props.staff !== undefined ) {    
         return(
             <div className="container">
-                <div className="row">
+                <Row className="justify-content-between">
                     <Breadcrumb>
                         <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
                         <BreadcrumbItem active>{ props.staff.name }</BreadcrumbItem>
                     </Breadcrumb>
-                </div>
+                    <Button outline onClick={UpdateStaff}>
+                        Cập nhật thông tin nhân viên
+                    </Button>
+                    <Button outline onClick={DeleteStaff}>
+                        <Link to="/staff">Xóa nhân viên</Link>
+                    </Button>
+                </Row>
                 <Render staff={ props.staff }/>
             </div>
         )
     } else {
         return(
-            <div></div>
+            <div className="container">
+                <Row className="justify-content-between">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/staff">Staffs List</Link></BreadcrumbItem>
+                    </Breadcrumb>
+                </Row>
+                <div  className="card-body">
+                    <h2>Không có thông tin</h2>
+                    <Link to="/staff">Quay lại trang chủ</Link>
+                </div>
+            </div>
         )
     }
 }

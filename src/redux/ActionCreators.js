@@ -32,12 +32,36 @@ export const postStaff = ( newStaff ) => (dispatch) => {
     }, error => {
         throw error;
     })
-    .then(response => response.json())
-    .then( response => dispatch( addStaff( response ) ) )
-    .catch(error =>  { console.log('post staffs', error.message); alert('Your comment could not be posted\nError: '+error.message); })
+    .then( response => response.json()) //Trả về item thêm vào
+    .then( newStaff => dispatch( addStaff( newStaff ) ) )
+    .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be posted\nError: ' + error.message ) })
 }
 
-export const fetchStaffs = () => (dispatch) => {
+export const deleteStaff = ( id ) => (dispatch) => {
+
+    return fetch( staffsUrl + '/' + id , {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+    }, error => {
+        throw error;
+    }) //Trả về item rỗng
+    .then( () => dispatch( fetchStaffs() ) )
+    .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be deleted\nError: ' + error.message ) })
+}
+
+export const fetchStaffs = () => ( dispatch ) => {
 
     dispatch(staffsLoading(true));
 
@@ -54,9 +78,9 @@ export const fetchStaffs = () => (dispatch) => {
         var errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.json())
-    .then(staffs => dispatch(addStaffs(staffs)))
-    .catch(error => dispatch(staffsFailed(error.message)))
+    .then( response => response.json() ) //Trả về danh sách
+    .then( staffs => dispatch( addStaffs( staffs ) ) )
+    .catch( error => dispatch( staffsFailed( error.message ) ) )
 }
 
 export const staffsLoading = () => ({

@@ -89,8 +89,8 @@ class StaffList extends Component  {
                         <ModalHeader toggle={this.toggleModal}>Thêm nhân viên</ModalHeader>
                         <ModalBody>
                             <ModalForm
-                                resetModalForm={this.props.resetModalForm}
                                 postStaff={this.props.postStaff}
+                                resetModalForm={this.props.resetModalForm}
                             />
                         </ModalBody>
                     </Modal>
