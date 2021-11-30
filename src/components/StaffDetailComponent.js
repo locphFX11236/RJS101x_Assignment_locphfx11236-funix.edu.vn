@@ -34,7 +34,7 @@ const  StaffDetail = ( props ) => {
     }
 
     const UpdateStaff = () => {
-        return console.log("u")
+        return props.patchStaff(props.staff.id)
     }
 
     if ( props.isLoading ) {

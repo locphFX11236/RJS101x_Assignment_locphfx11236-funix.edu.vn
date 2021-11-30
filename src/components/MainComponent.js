@@ -7,9 +7,10 @@ import StaffList from './StaffListComponent';
 import Department from './DepartmentComponent';
 import Salary from './SalaryComponent';
 import StaffDetail from './StaffDetailComponent';
+import DepartDetail from './DepartDetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import { postStaff, deleteStaff, searchStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
+import { postStaff, deleteStaff, patchStaff, searchStaff, fetchStaffs, fetchDeparts, fetchSalarys } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -22,6 +23,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     postStaff: ( newStaff ) => dispatch( postStaff( newStaff ) ),
     deleteStaff: ( id ) => dispatch( deleteStaff( id ) ),
+    patchStaff: ( id ) => dispatch( patchStaff( id ) ),
     searchStaff: ( searchData ) => dispatch( searchStaff( searchData ) ),
     fetchStaffs: () => { dispatch( fetchStaffs() ) },
     resetModalForm: () => { dispatch( actions.reset( 'modalForm' ) ) },
@@ -47,6 +49,22 @@ class Main extends Component {
                     isLoading={this.props.staffs.isLoading}
                     errMess={this.props.staffs.errMess}
                     deleteStaff={this.props.deleteStaff}
+                    patchStaff={this.props.patchStaff}
+                />
+            )
+        }
+
+        const DepartWithId = ({match}) => {
+            return(
+                <DepartDetail
+                    depart={this.props.departs.departs.filter(
+                        (depart) => depart.id === match.params.departId
+                    )[0]}
+                    staffs={this.props.staffs.staffs.filter(
+                        (staff) => staff.departmentId === match.params.departId
+                    )}
+                    isLoading={this.props.departs.isLoading}
+                    errMess={this.props.departs.errMess}
                 />
             )
         }
@@ -77,6 +95,8 @@ class Main extends Component {
                                     departsErrMess={ this.props.departs.errMess }
                                 />
                             } />
+
+                            <Route path='/department/:departId' component={DepartWithId}/>
 
                             <Route exact path='/salary' component={
                                 () => <Salary

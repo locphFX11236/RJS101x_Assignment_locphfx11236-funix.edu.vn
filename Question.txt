@@ -1,5 +1,14 @@
-/StaffListCo
-	"this.state.newStaff.doB" =/=> state   ?
-	e.pre   ?
-	,/;   ?
-	Form / LocalForm   ?
+? "this.state.newStaff.doB" =/=> state
+
+? e.pre
+
+? ,/;
+
+? Form / LocalForm
+
+? fetch: post/put/patch
+
+? sau khi clone dung	|npm init/
+						|npm install/
+						|npm install create-react-app/
+						|npx create-react-app file_name

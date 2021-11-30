@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText } from 'reactstrap';
-import { Breadcrumb, BreadcrumbItem,
+import { Card, CardImg, CardText,
+    Breadcrumb, BreadcrumbItem,
     Modal, ModalHeader, ModalBody,
     Button, Row
 } from 'reactstrap';

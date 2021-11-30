@@ -37,6 +37,32 @@ export const postStaff = ( newStaff ) => (dispatch) => {
     .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be posted\nError: ' + error.message ) })
 }
 
+export const patchStaff = ( id ) => (dispatch) => {
+    const data = { name:"aaab" }
+
+    return fetch( staffsUrl + '/' + id , {
+        method: "PATCH",
+        body: JSON.stringify( data ),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+    }, error => {
+        throw error;
+    }) //Trả về item thêm vào
+    .then( () => dispatch( fetchStaffs() ) )
+    .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be posted\nError: ' + error.message ) })
+}
+
 export const deleteStaff = ( id ) => (dispatch) => {
 
     return fetch( staffsUrl + '/' + id , {
