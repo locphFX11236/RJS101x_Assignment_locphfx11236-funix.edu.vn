@@ -31,15 +31,12 @@ export const postStaff = ( newStaff ) => (dispatch) => {
         }
     }, error => {
         throw error;
-    })
-    .then( response => response.json()) //Trả về item thêm vào
-    .then( newStaff => dispatch( addStaff( newStaff ) ) )
+    }) //Trả về item thêm vào
+    .then( () => dispatch( fetchStaffs() ) )
     .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be posted\nError: ' + error.message ) })
 }
 
-export const patchStaff = ( id ) => (dispatch) => {
-    const data = { name:"aaab" }
-
+export const patchStaff = ( id, data ) => (dispatch) => {
     return fetch( staffsUrl + '/' + id , {
         method: "PATCH",
         body: JSON.stringify( data ),
@@ -60,7 +57,7 @@ export const patchStaff = ( id ) => (dispatch) => {
         throw error;
     }) //Trả về item thêm vào
     .then( () => dispatch( fetchStaffs() ) )
-    .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be posted\nError: ' + error.message ) })
+    .catch( error =>  { dispatch( staffsFailed( error.message ) ); alert( 'Your item could not be patch\nError: ' + error.message ) })
 }
 
 export const deleteStaff = ( id ) => (dispatch) => {

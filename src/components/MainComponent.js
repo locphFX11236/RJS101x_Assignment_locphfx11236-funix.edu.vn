@@ -23,7 +23,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     postStaff: ( newStaff ) => dispatch( postStaff( newStaff ) ),
     deleteStaff: ( id ) => dispatch( deleteStaff( id ) ),
-    patchStaff: ( id ) => dispatch( patchStaff( id ) ),
+    patchStaff: ( id, data ) => dispatch( patchStaff( id, data ) ),
     searchStaff: ( searchData ) => dispatch( searchStaff( searchData ) ),
     fetchStaffs: () => { dispatch( fetchStaffs() ) },
     resetModalForm: () => { dispatch( actions.reset( 'modalForm' ) ) },
@@ -46,6 +46,7 @@ class Main extends Component {
                     staff={this.props.staffs.staffs.filter(
                         (staff) => staff.id === parseInt(match.params.staffId,10)
                     )[0]}
+                    departs={this.props.departs.departs}
                     isLoading={this.props.staffs.isLoading}
                     errMess={this.props.staffs.errMess}
                     deleteStaff={this.props.deleteStaff}

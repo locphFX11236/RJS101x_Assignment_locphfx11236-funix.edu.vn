@@ -16,18 +16,19 @@ class ModalForm extends Component  {
     }
 
     handleSubmit(values) {
-        const newStaff = {
+        const newstaff = {
             id: this.props.staffs,
             name: values.name,
             doB: values.doB,
             salaryScale: Number(values.salaryScale),
             startDate: values.startDate,
-            department: values.department,
+            departmentId: values.departmentId,
             annualLeave: Number(values.annualLeave),
             overTime: Number(values.overTime),
             image: '/asset/images/alberto.png'
         }
-        this.props.postStaff( newStaff )
+        this.props.postStaff( newstaff )
+        // this.props.dispatch( modalForm )
         this.props.resetModalForm()
     }
 
@@ -40,7 +41,6 @@ class ModalForm extends Component  {
                         <Control.text model=".name" name="name"
                             placeholder="Nhập tên"
                             className="form-control"
-                            defaultValue="aaa"
                             validators={{
                                 required, minLength: minLength(3), maxLength: maxLength(15)
                             }}
@@ -63,7 +63,6 @@ class ModalForm extends Component  {
                         <Control.text model=".doB" name="doB"
                             type="date"
                             className="form-control"
-                            defaultValue="01/11/2021"
                             validators={{ required }}
                         />
                         <Errors
@@ -81,7 +80,6 @@ class ModalForm extends Component  {
                             type="number"
                             placeholder="Hệ số lương"
                             className="form-control"
-                            defaultValue="1"
                             validators={{
                                 required, isNumber
                             }}
@@ -103,7 +101,6 @@ class ModalForm extends Component  {
                         <Control.text model=".startDate" name="startDate"
                             type="date"
                             className="form-control"
-                            defaultValue="04/11/2021"
                             validators={{
                                 required
                             }}
@@ -119,21 +116,26 @@ class ModalForm extends Component  {
                     </Col>
                 </Row>
                 <Row className="form-group m-2">
-                    <Label htmlFor="department" md={5}>Phòng ban</Label>
+                    <Label htmlFor="departmentId" md={5}>Phòng ban</Label>
                     <Col md={7}>
-                        <Control.text model=".department" name="department"
-                            placeholder="Phòng ban"
+                        <Control.select 
+                            model=".departmentId" 
+                            name="departmentId"
                             className="form-control"
-                            defaultValue="IT"
                             validators={{ required }}
-                        />
+                        >
+                            <option value="none" selected disabled hidden>Select an Option</option>
+                            <option value="Dept01">Sale</option>
+                            <option value="Dept02">HR</option>
+                            <option value="Dept03">Marketing</option>
+                            <option value="Dept04">IT</option>
+                            <option value="Dept05">Finance</option>
+                        </Control.select>
                         <Errors
                             className="text-danger"
-                            model=".department"
+                            model=".departmentId"
                             show="touched"
-                            messages={{
-                                required: 'Không bỏ trống.'
-                            }}
+                            messages={{ required: 'Không bỏ qua.' }}
                         />
                     </Col>
                 </Row>
@@ -144,7 +146,6 @@ class ModalForm extends Component  {
                             type="number"
                             placeholder="Số ngày nghỉ còn lại"
                             className="form-control"
-                            defaultValue="3"
                             validators={{
                                 required, isNumber
                             }}
@@ -167,7 +168,6 @@ class ModalForm extends Component  {
                             type="number"
                             placeholder="Số ngày đã làm thêm"
                             className="form-control"
-                            defaultValue="4"
                             validators={{
                                 required, isNumber
                             }}
